@@ -17,7 +17,7 @@ int main()
     //create window                      width, height, window header
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Guns of Bullshit", sf::Style::Default, settings);
     //--------------INITIALIZE---------------
-    sf::RectangleShape bullet(sf::Vector2f(50, 25));
+    std::vector<sf::RectangleShape> bullets;
     float bulletSpeed = 1.0f;
     //--------------LOAD---------------
     //--------------Skeleton---------------
@@ -52,11 +52,12 @@ int main()
     else
         std::cout << "ERROR\n";
     //--------------LOAD---------------
-    bullet.setPosition(playerSprite.getPosition());
+    //bullet.setPosition(playerSprite.getPosition());
     //--------------- Calculate direction of the bullet ---------------
-    sf::Vector2f bulletDirection = skeletonSprite.getPosition() - bullet.getPosition();
-    bulletDirection = NormalaizeVector(bulletDirection);
+    //sf::Vector2f bulletDirection = skeletonSprite.getPosition() - bullet.getPosition();
+    //bulletDirection = NormalaizeVector(bulletDirection);
     //--------------- Calculate direction of the bullet ---------------
+    
     //main window loop
     while(window.isOpen()) 
     {
@@ -69,7 +70,7 @@ int main()
                 window.close(); 
         }
 
-        bullet.setPosition(bullet.getPosition() + bulletDirection*bulletSpeed);
+        //bullet.setPosition(bullet.getPosition() + bulletDirection*bulletSpeed);
 
 
         //Moving up
@@ -94,13 +95,27 @@ int main()
             sf::Vector2f position = playerSprite.getPosition();
             playerSprite.setPosition(position + sf::Vector2f(1, 0));
         }
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
+        {
+            bullets.push_back(sf::RectangleShape(sf::Vector2f(50, 25)));
+
+            int i = bullets.size() - 1;
+            bullets[i].setPosition(playerSprite.getPosition());
+        }
+        for (size_t i = 0; i < bullets.size(); ++i)
+        {
+            sf::Vector2f bulletDirection = skeletonSprite.getPosition() - bullets[i].getPosition();
+            bulletDirection = NormalaizeVector(bulletDirection);
+            bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
+        }
         //--------------Update---------------
         
         //--------------Draw---------------
         window.clear(sf::Color::Black);  
         window.draw(playerSprite);
         window.draw(skeletonSprite);
-        window.draw(bullet);
+        for (size_t i = 0; i < bullets.size(); ++i)
+            window.draw(bullets[i]);
         window.display();  
         //--------------Draw---------------
     }
