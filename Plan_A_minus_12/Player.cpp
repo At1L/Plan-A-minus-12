@@ -30,29 +30,29 @@ void Player::Load()
         std::cout << "ERROR\n";
 }
 
-void Player::Update(Skeleton& skeleton) 
+void Player::Update(float deltaTime, Skeleton& skeleton)
 {
     //Moving up
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         //take current position of image
         sf::Vector2f position = sprite.getPosition();
         //add pixels to coordinate to move it
-        sprite.setPosition(position + sf::Vector2f(0, -1));
+        sprite.setPosition(position + sf::Vector2f(0, -1) * playerSpeed * deltaTime);
     }
     //Moving down
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         sf::Vector2f position = sprite.getPosition();
-        sprite.setPosition(position + sf::Vector2f(0, 1));
+        sprite.setPosition(position + sf::Vector2f(0, 1) * playerSpeed * deltaTime);
     }
     //Moving left
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
         sf::Vector2f position = sprite.getPosition();
-        sprite.setPosition(position + sf::Vector2f(-1, 0));
+        sprite.setPosition(position + sf::Vector2f(-1, 0) * playerSpeed * deltaTime);
     }
     //Moving right
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
         sf::Vector2f position = sprite.getPosition();
-        sprite.setPosition(position + sf::Vector2f(1, 0));
+        sprite.setPosition(position + sf::Vector2f(1, 0) * playerSpeed * deltaTime);
     }
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
     {
@@ -65,14 +65,14 @@ void Player::Update(Skeleton& skeleton)
     {
         sf::Vector2f bulletDirection = skeleton.sprite.getPosition() - bullets[i].getPosition();
         bulletDirection = Math::NormalaizeVector(bulletDirection);
-        bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed);
+        bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed * deltaTime);
     }
 
     boundingRectangle.setPosition(sprite.getPosition());
 
     if (Math::DidRectCollide(sprite.getGlobalBounds(), skeleton.sprite.getGlobalBounds()))
     {
-        std::cout << "Collisiion" << "\n";
+        std::cout << "Collision" << "\n";
     }
 }
 

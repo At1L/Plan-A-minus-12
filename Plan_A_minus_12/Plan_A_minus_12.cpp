@@ -1,4 +1,5 @@
 ﻿#include <SFML/Graphics.hpp>
+#include <iostream>
 #include "Player.h"
 #include "Skeleton.h"
 int main()
@@ -8,6 +9,7 @@ int main()
     settings.antialiasingLevel = 8;
     //create window                      width, height, window header
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Dungeon master: Deep Dark Fantasy", sf::Style::Default, settings);
+    window.setFramerateLimit(240);
     //--------------INITIALIZE---------------
     //--------------LOAD---------------
     //--------------Skeleton---------------
@@ -20,8 +22,12 @@ int main()
     player.Initialize();
     player.Load();
     //--------------LOAD---------------
+    sf::Clock clock;
     while(window.isOpen()) 
     {
+        sf::Time deltaTimer = clock.restart();
+        float deltaTime = deltaTimer.asMilliseconds();
+        std::cout << deltaTime << "\n";
         sf::Event event; 
         //--------------Update---------------
         while (window.pollEvent(event)) 
@@ -30,8 +36,9 @@ int main()
             if (event.type == sf::Event::Closed)  
                 window.close(); 
         }
-        skeleton.Update();
-        player.Update(skeleton);
+
+        skeleton.Update(deltaTime);
+        player.Update(deltaTime, skeleton);
         //--------------Update---------------
         
         //--------------Draw---------------
@@ -40,6 +47,7 @@ int main()
         player.Draw(window);
         window.display();  
         //--------------Draw---------------
+        
     }
     return 0;
 }
