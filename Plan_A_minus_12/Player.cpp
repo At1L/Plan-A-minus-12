@@ -2,6 +2,15 @@
 #include <iostream>
 #include "Math.h"
 
+Player::Player() :
+    bulletSpeed(0.5f), playerSpeed(0.5f)
+{
+}
+
+Player::~Player()
+{
+}
+
 void Player::Initialize()
 {
     boundingRectangle.setFillColor(sf::Color::Transparent);

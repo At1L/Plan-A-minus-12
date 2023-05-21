@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Player.h"
 #include "Skeleton.h"
+#include "FrameRate.h"
 int main()
 {
     //--------------INITIALIZE---------------
@@ -9,27 +10,32 @@ int main()
     settings.antialiasingLevel = 8;
     //create window                      width, height, window header
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Dungeon master: Deep Dark Fantasy", sf::Style::Default, settings);
-    window.setFramerateLimit(240);
+    window.setFramerateLimit(120);
     //--------------INITIALIZE---------------
-    //--------------LOAD---------------
-    //--------------Skeleton---------------
-    Skeleton skeleton;
+    FrameRate frameRate;
+    Skeleton skeleton; 
+    Player player; 
+    //--------------INITIALIZE---------------
+    frameRate.Initialize();
     skeleton.Initialize();
-    skeleton.Load();
+    player.Initialize();  
+    //--------------INITIALIZE---------------
 
-    //--------------Player---------------
-    Player player;
-    player.Initialize();
+
+    //--------------LOAD---------------
+    frameRate.Load();
+    skeleton.Load();
     player.Load();
     //--------------LOAD---------------
     sf::Clock clock;
     while(window.isOpen()) 
     {
         sf::Time deltaTimer = clock.restart();
-        float deltaTime = deltaTimer.asMilliseconds();
-        std::cout << deltaTime << "\n";
-        sf::Event event; 
+        double deltaTime = deltaTimer.asMicroseconds()/1000.0;
+        
+
         //--------------Update---------------
+        sf::Event event; 
         while (window.pollEvent(event)) 
         {
              
@@ -37,6 +43,7 @@ int main()
                 window.close(); 
         }
 
+        frameRate.Update(deltaTime);
         skeleton.Update(deltaTime);
         player.Update(deltaTime, skeleton);
         //--------------Update---------------
@@ -45,6 +52,7 @@ int main()
         window.clear(sf::Color::Black);  
         skeleton.Draw(window);
         player.Draw(window);
+        frameRate.Draw(window); 
         window.display();  
         //--------------Draw---------------
         

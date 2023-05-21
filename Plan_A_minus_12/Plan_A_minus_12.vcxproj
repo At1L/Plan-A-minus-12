@@ -137,12 +137,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FrameRate.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Plan_A_minus_12.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FrameRate.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Skeleton.h" />

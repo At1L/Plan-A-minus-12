@@ -10,6 +10,8 @@ public:
 	sf::Sprite sprite;
 
 public:
+	Skeleton();
+	~Skeleton();
 	void Initialize();
 	void Load();
 	void Update(float deltaTime); 

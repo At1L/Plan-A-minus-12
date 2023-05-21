@@ -7,14 +7,18 @@ private:
 	sf::Texture texture;
 
 	std::vector<sf::RectangleShape> bullets;
-	float bulletSpeed = 1.0f; 
-	float playerSpeed = 1.0f;
+	float bulletSpeed; 
+	float playerSpeed;
+
 	sf::RectangleShape boundingRectangle;
 	sf::Vector2i size; 
 
 public:
 	sf::Sprite sprite; 
+
 public:
+	Player();
+	~Player();
 	void Initialize();
 	void Load();
 	void Update(float deltaTime, Skeleton& skeleton);  

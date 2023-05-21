@@ -1,10 +1,18 @@
 #include "Skeleton.h"
 #include <iostream>
 
+Skeleton::Skeleton()
+{
+}
+
+Skeleton::~Skeleton()
+{
+}
+
 void Skeleton::Initialize()
 {
     boundingRectangle.setFillColor(sf::Color::Transparent);
-    boundingRectangle.setOutlineColor(sf::Color::Red);
+    boundingRectangle.setOutlineColor(sf::Color::Blue);
     boundingRectangle.setOutlineThickness(1);
 
     size = sf::Vector2i(64, 64);
