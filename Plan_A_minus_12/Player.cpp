@@ -75,10 +75,6 @@ void Player::Update(float deltaTime, Skeleton& skeleton, sf::Vector2f& mousePosi
     }
     for (size_t i = 0; i < bullets.size(); ++i)
     {
-        //sf::Vector2f bulletDirection = mousePosition - bullets[i].getPosition(); 
-        //bulletDirection = Math::NormalaizeVector(bulletDirection);
-        //bullets[i].setPosition(bullets[i].getPosition() + bulletDirection * bulletSpeed * deltaTime);
-        
         bullets[i].Update(deltaTime);
         if (skeleton.health > 0) {
             if (Math::DidRectCollide(bullets[i].GetGlobalBounds(), skeleton.sprite.getGlobalBounds())) 
