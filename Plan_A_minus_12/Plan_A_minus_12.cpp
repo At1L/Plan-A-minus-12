@@ -9,7 +9,7 @@ int main()
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     //create window                      width, height, window header
-    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Dungeon master: Deep Dark Fantasy", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(960, 540), "Dungeon master: Deep Dark Fantasy", sf::Style::Default, settings);
     window.setFramerateLimit(120);
     //--------------INITIALIZE---------------
     FrameRate frameRate;
@@ -42,10 +42,11 @@ int main()
             if (event.type == sf::Event::Closed)  
                 window.close(); 
         }
+        sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window)); 
 
         frameRate.Update(deltaTime);
         skeleton.Update(deltaTime);
-        player.Update(deltaTime, skeleton);
+        player.Update(deltaTime, skeleton, mousePosition);
         //--------------Update---------------
         
         //--------------Draw---------------
