@@ -22,7 +22,7 @@ public:
 	void ChangeHealth(int hp);
 	void Initialize();
 	void Load();
-	void Update(float deltaTime); 
+	void Update(double deltaTime);
 	void Draw(sf::RenderWindow& window);
 
 };

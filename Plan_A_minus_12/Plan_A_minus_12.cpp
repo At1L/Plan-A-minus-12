@@ -1,22 +1,28 @@
-﻿#include <SFML/Graphics.hpp>
+﻿#include <SFML/Graphics.hpp>  
 #include <iostream>
 #include "Player.h"
 #include "Skeleton.h"
 #include "FrameRate.h"
+#include "Map.h"
+#include "MapLoader.h"
 int main()
 {
     //--------------INITIALIZE---------------
     sf::ContextSettings settings;
     settings.antialiasingLevel = 8;
     //create window                      width, height, window header
-    sf::RenderWindow window(sf::VideoMode(960, 540), "Dungeon master: Deep Dark Fantasy", sf::Style::Default, settings);
+    sf::RenderWindow window(sf::VideoMode(1920, 1080), "Dungeon master: Deep Dark Fantasy", sf::Style::Default, settings);
     window.setFramerateLimit(120);
     //--------------INITIALIZE---------------
     FrameRate frameRate;
+    Map map;
     Skeleton skeleton; 
     Player player; 
+
+    MapLoader mapLoader;
     //--------------INITIALIZE---------------
     frameRate.Initialize();
+    map.Initialize();
     skeleton.Initialize();
     player.Initialize();  
     //--------------INITIALIZE---------------
@@ -24,6 +30,7 @@ int main()
 
     //--------------LOAD---------------
     frameRate.Load();
+    map.Load("assets/maps/level1.rmap");
     skeleton.Load();
     player.Load();
     //--------------LOAD---------------
@@ -45,12 +52,14 @@ int main()
         sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window)); 
 
         frameRate.Update(deltaTime);
+        map.Update(deltaTime);
         skeleton.Update(deltaTime);
         player.Update(deltaTime, skeleton, mousePosition);
         //--------------Update---------------
         
         //--------------Draw---------------
         window.clear(sf::Color::Black);  
+        map.Draw(window);
         skeleton.Draw(window);
         player.Draw(window);
         frameRate.Draw(window); 
