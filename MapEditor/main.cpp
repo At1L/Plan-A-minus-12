@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-
+#include "Grid.h"
+#include "MouseTile.h"
 int main()
 {
     //--------------INITIALIZE---------------
@@ -10,13 +11,24 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Map editor", sf::Style::Default, settings);
     window.setFramerateLimit(120);
     //--------------INITIALIZE---------------
+    Grid grid(
+        sf::Vector2f(0, 0),     //position
+        sf::Vector2f(16, 16),       //cells size
+        sf::Vector2i(10, 5),        // (horizontal cells, vertical cells)
+        sf::Vector2i(10, 10),       //Scale
+        sf::Color(255, 255, 255, 255),  //Color (red, green, blue, brightness)
+        2); 
 
+    MouseTile mouseTile(sf::Vector2i(16, 16), sf::Vector2f(10, 10));
     //--------------INITIALIZE---------------
+    grid.Initialize();
+    mouseTile.Initialize();
     //--------------INITIALIZE---------------
 
 
     //--------------LOAD---------------
-
+    grid.Load();
+    mouseTile.Load();
     //--------------LOAD---------------
     sf::Clock clock;
     while (window.isOpen())
@@ -35,11 +47,14 @@ int main()
         }
         sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
 
-      
+        grid.Update(deltaTime);
+        mouseTile.Update(deltaTime, mousePosition);
         //--------------Update---------------
 
         //--------------Draw---------------
         window.clear(sf::Color::Black);
+        grid.Draw(window);
+        mouseTile.Draw(window);
         window.display();
         //--------------Draw---------------
 
