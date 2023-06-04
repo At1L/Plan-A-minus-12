@@ -32,6 +32,7 @@ int main()
     frameRate.Load();
     map.Load("assets/maps/level1.rmap");
     skeleton.Load();
+   
     player.Load();
     //--------------LOAD---------------
     sf::Clock clock;
@@ -55,6 +56,10 @@ int main()
         map.Update(deltaTime);
         skeleton.Update(skeleton.sprite.getPosition(), player.sprite.getPosition(), deltaTime);
         player.Update(deltaTime, skeleton, mousePosition);
+        if (skeleton.health <= 0)
+        {
+            skeleton.Load();
+        }
         //--------------Update---------------
         
         //--------------Draw---------------

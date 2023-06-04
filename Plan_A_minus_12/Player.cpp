@@ -3,6 +3,7 @@
 #include "Math.h"
 #include <algorithm>
 
+
 Player::Player() :
     playerSpeed(0.5f),
     maxFireRate(250.0f), fireRateTimer(0), hp(100)
@@ -102,6 +103,7 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
         && abs(skeleton.sprite.getPosition().y - sprite.getPosition().y) < 5)
     {
         hp--;
+  
     }
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());

@@ -27,6 +27,7 @@ void Skeleton::Initialize()
 
 void Skeleton::Load()
 {
+    health = 100;
     if (font.loadFromFile("Assets/Fonts/arial.ttf")) {
         std::cout << "Font loaded\n";
         healthText.setFont(font);
@@ -69,5 +70,6 @@ void Skeleton::Draw(sf::RenderWindow& window)
         window.draw(healthText);
 
     }
+    
     
 }
