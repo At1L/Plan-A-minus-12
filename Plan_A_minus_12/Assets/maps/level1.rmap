@@ -1,6 +1,6 @@
 [Map]
 version=1
-tilesheet=C:/Users/Arseny/Desktop/Plan_A_minus_12/Plan_A_minus_12/Assets/World/Prison/Tilesheet.png
+tilesheet=Assets/World/Prison/Tilesheet.png
 name=Level 1
 tileWidth=16
 tileHeight=16
