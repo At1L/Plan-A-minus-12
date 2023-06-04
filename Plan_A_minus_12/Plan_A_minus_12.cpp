@@ -53,7 +53,7 @@ int main()
 
         frameRate.Update(deltaTime);
         map.Update(deltaTime);
-        skeleton.Update(deltaTime);
+        skeleton.Update(skeleton.sprite.getPosition(), player.sprite.getPosition(), deltaTime);
         player.Update(deltaTime, skeleton, mousePosition);
         //--------------Update---------------
         

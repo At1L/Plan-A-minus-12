@@ -4,7 +4,7 @@ class Skeleton
 {
 private:
 	sf::Texture texture;
-
+	sf::Vector2f direction;
 	sf::Text healthText;
 	sf::Font font;
 
@@ -22,7 +22,7 @@ public:
 	void ChangeHealth(int hp);
 	void Initialize();
 	void Load();
-	void Update(double deltaTime);
+	void Update(const sf::Vector2f& position, const sf::Vector2f& target, double deltaTime);
 	void Draw(sf::RenderWindow& window);
 
 };
