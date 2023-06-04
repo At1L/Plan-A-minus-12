@@ -18,12 +18,21 @@
     <ClCompile Include="MouseTile.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grid.h">
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="MouseTile.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
