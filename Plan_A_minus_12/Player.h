@@ -9,9 +9,14 @@ private:
 
 	std::vector<Bullet> bullets; 
 
+	sf::Text healthText;
+
+	sf::Font font;
+
 	float maxFireRate;
 	float fireRateTimer;
 	float playerSpeed;
+	int hp;
 
 	sf::RectangleShape boundingRectangle;
 	sf::Vector2i size; 

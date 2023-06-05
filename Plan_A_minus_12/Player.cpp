@@ -1,10 +1,12 @@
 #include "Player.h"
 #include <iostream>
 #include "Math.h"
+#include <algorithm>
+
 
 Player::Player() :
     playerSpeed(0.5f),
-    maxFireRate(250.0f), fireRateTimer(0)
+    maxFireRate(250.0f), fireRateTimer(0), hp(100)
 {
 }
 
@@ -17,19 +19,26 @@ void Player::Initialize()
     boundingRectangle.setFillColor(sf::Color::Transparent);
     boundingRectangle.setOutlineColor(sf::Color::Red);
     boundingRectangle.setOutlineThickness(1);
-
+    hp = 100;
     size = sf::Vector2i(24, 32);  
 }
 
 void Player::Load()
 {
+    
     if (texture.loadFromFile("Assets/Player/Textures/FumikoSpritesheet.png")) {
         std::cout << "Hero Loaded\n"; 
-        sprite.setTexture(texture); 
-
+        
+        if (font.loadFromFile("Assets/Fonts/arial.ttf"))
+        {
+            std::cout << "Font loaded\n";
+            healthText.setFont(font);
+            healthText.setString(std::to_string(hp));
+        }
+        
         int XIndex = 4;
         int YIndex = 2;
-
+        sprite.setTexture(texture);
         sprite.setTextureRect(sf::IntRect(XIndex * size.x, YIndex * size.y, size.x, size.y));
         sprite.setPosition(sf::Vector2f(100, 100));
 
@@ -42,6 +51,7 @@ void Player::Load()
 
 void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePosition)
 {
+
     //Moving up
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         //take current position of image
@@ -85,15 +95,26 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
             }
         }
     }
+    
 
     boundingRectangle.setPosition(sprite.getPosition());
     //--------------------------BULLET--------------------------
+    if (abs(skeleton.sprite.getPosition().x - sprite.getPosition().x) < 5
+        && abs(skeleton.sprite.getPosition().y - sprite.getPosition().y) < 5)
+    {
+        hp--;
+  
+    }
+    healthText.setString(std::to_string(hp));
+    healthText.setPosition(sprite.getPosition());
 }
 
 void Player::Draw(sf::RenderWindow& window)
 {
     window.draw(sprite); 
     window.draw(boundingRectangle);
+    window.draw(healthText);
     for (size_t i = 0; i < bullets.size(); ++i) 
         bullets[i].Draw(window); 
+
 }

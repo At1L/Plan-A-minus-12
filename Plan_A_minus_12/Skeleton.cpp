@@ -1,4 +1,5 @@
 #include "Skeleton.h"
+#include "Math.h"
 #include <iostream>
 
 Skeleton::Skeleton() : health(100)
@@ -26,6 +27,7 @@ void Skeleton::Initialize()
 
 void Skeleton::Load()
 {
+    health = 100;
     if (font.loadFromFile("Assets/Fonts/arial.ttf")) {
         std::cout << "Font loaded\n";
         healthText.setFont(font);
@@ -50,12 +52,13 @@ void Skeleton::Load()
     }
 }
 
-void Skeleton::Update(double deltaTime)
+void Skeleton::Update(const sf::Vector2f& position, const sf::Vector2f& target, double deltaTime)
 {
     if (health > 0) {
-        boundingRectangle.setPosition(sprite.getPosition());
-        healthText.setPosition(sprite.getPosition());
-
+        direction = Math::NormalaizeVector(target - position);
+        boundingRectangle.setPosition(sprite.getPosition() + direction * (float)0.1 * (float)deltaTime);
+        sprite.setPosition(sprite.getPosition() + direction * (float)0.1 * (float)deltaTime);
+        healthText.setPosition(sprite.getPosition() + direction * (float)0.1 * (float)deltaTime);
     }
 }
 
@@ -67,5 +70,6 @@ void Skeleton::Draw(sf::RenderWindow& window)
         window.draw(healthText);
 
     }
+    
     
 }
