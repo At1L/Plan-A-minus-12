@@ -7,7 +7,7 @@ private:
 	sf::Vector2f direction;
 	sf::Text healthText;
 	sf::Font font;
-
+	float m_speed;
 public:
 	sf::Sprite sprite;
 	sf::RectangleShape boundingRectangle;
@@ -16,13 +16,13 @@ public:
 	int health;
 
 public:
-	Skeleton();
+	Skeleton(int hp, float speed);
 	~Skeleton();
 
 	void ChangeHealth(int hp);
 	void Initialize();
 	void Load();
-	void Update(const sf::Vector2f& position, const sf::Vector2f& target, double deltaTime);
+	void Update(const sf::Vector2f& target, double deltaTime);
 	void Draw(sf::RenderWindow& window);
 
 };

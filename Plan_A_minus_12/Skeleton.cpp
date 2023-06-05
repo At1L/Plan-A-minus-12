@@ -2,7 +2,7 @@
 #include "Math.h"
 #include <iostream>
 
-Skeleton::Skeleton() : health(100)
+Skeleton::Skeleton(int hp, float speed) : health(hp), m_speed(speed)
 {
 }
 
@@ -52,13 +52,13 @@ void Skeleton::Load()
     }
 }
 
-void Skeleton::Update(const sf::Vector2f& position, const sf::Vector2f& target, double deltaTime)
+void Skeleton::Update(const sf::Vector2f& target, double deltaTime)
 {
     if (health > 0) {
-        direction = Math::NormalaizeVector(target - position);
-        boundingRectangle.setPosition(sprite.getPosition() + direction * (float)0.1 * (float)deltaTime);
-        sprite.setPosition(sprite.getPosition() + direction * (float)0.1 * (float)deltaTime);
-        healthText.setPosition(sprite.getPosition() + direction * (float)0.1 * (float)deltaTime);
+        direction = Math::NormalaizeVector(target - sprite.getPosition());
+        sprite.setPosition(sprite.getPosition() + direction * m_speed * (float)deltaTime);
+        boundingRectangle.setPosition(sprite.getPosition()); 
+        healthText.setPosition(sprite.getPosition()); 
     }
 }
 

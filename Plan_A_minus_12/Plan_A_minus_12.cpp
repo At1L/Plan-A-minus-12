@@ -16,7 +16,7 @@ int main()
     //--------------INITIALIZE---------------
     FrameRate frameRate;
     Map map;
-    Skeleton skeleton; 
+    Skeleton skeleton(100, 0); 
     Player player; 
 
     MapLoader mapLoader;
@@ -54,12 +54,8 @@ int main()
 
         frameRate.Update(deltaTime);
         map.Update(deltaTime);
-        skeleton.Update(skeleton.sprite.getPosition(), player.sprite.getPosition(), deltaTime);
+        skeleton.Update(player.sprite.getPosition(), deltaTime);
         player.Update(deltaTime, skeleton, mousePosition);
-        if (skeleton.health <= 0)
-        {
-            skeleton.Load();
-        }
         //--------------Update---------------
         
         //--------------Draw---------------

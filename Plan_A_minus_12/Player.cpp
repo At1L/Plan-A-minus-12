@@ -81,6 +81,7 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
         bullets.push_back(Bullet());
         int i = bullets.size() - 1;
         bullets[i].Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        bullets[i].Load();
         fireRateTimer = 0;
     }
     for (size_t i = 0; i < bullets.size(); ++i)
@@ -97,8 +98,8 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
     }
     
 
-    boundingRectangle.setPosition(sprite.getPosition());
     //--------------------------BULLET--------------------------
+    boundingRectangle.setPosition(sprite.getPosition());
     if (abs(skeleton.sprite.getPosition().x - sprite.getPosition().x) < 5
         && abs(skeleton.sprite.getPosition().y - sprite.getPosition().y) < 5)
     {
