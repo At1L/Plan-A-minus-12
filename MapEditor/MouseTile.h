@@ -21,9 +21,9 @@ public:
 
 	void Initialize();
 	void Load();
-	void Update(double deltaTime, sf::Vector2f mousePosition);
+	void Update(double deltaTime,const sf::Vector2f& mousePosition);
 	void Draw(sf::RenderWindow& window);
 
-	bool IsMouseClickedOnGrid(sf::Vector2f& tilePosition, const sf::Vector2f& mousePosition);
+	bool IsMouseClickedOnGrid(sf::Vector2f& tilePosition, const sf::Vector2f& mousePosition) const;
 };
 
