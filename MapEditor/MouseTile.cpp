@@ -41,11 +41,17 @@ void MouseTile::Draw(sf::RenderWindow& window)
 	window.draw(m_tile);
 }
 
-bool MouseTile::IsMouseClickedOnGrid(const sf::Vector2f& tilePosition)
+bool MouseTile::IsMouseClickedOnGrid(sf::Vector2f& tilePosition, const sf::Vector2f& mousePosition)
 {
 	bool itsOnGrid = true;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && itsOnGrid)
 	{
+		int gridIndexX = (mousePosition.x - m_offset.x) / (m_tileSize.x * m_tile.getScale().x);
+		int x = gridIndexX * (m_tileSize.x * m_tileScale.x) + m_offset.x;
+
+		int gridIndexY = (mousePosition.y - m_offset.y) / (m_tileSize.y * m_tileScale.y);
+		int y = gridIndexY * m_tileSize.y * m_tileScale.y + m_offset.y;
+		tilePosition = sf::Vector2f(x,y);
 		return true;
 	}
 	return false;

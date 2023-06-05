@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Grid.h"
 #include "MouseTile.h"
+#include "Map.h"
 int main()
 {
     //--------------INITIALIZE---------------
@@ -22,9 +23,11 @@ int main()
     MouseTile mouseTile(sf::Vector2i(16, 16),   //cells size
         sf::Vector2f(10, 10),                   //scale
         sf::Vector2f(100, 50));                 //grid position
+    Map map(mouseTile);
     //--------------INITIALIZE---------------
     grid.Initialize();
     mouseTile.Initialize();
+    map.Initialize();
     //--------------INITIALIZE---------------
 
 
@@ -51,11 +54,12 @@ int main()
 
         grid.Update(deltaTime);
         mouseTile.Update(deltaTime, mousePosition);
-
+        map.Update(deltaTime, mousePosition);
         //--------------Draw---------------
         window.clear(sf::Color::Black);
         grid.Draw(window);
         mouseTile.Draw(window);
+        map.Draw(window);
         window.display();
         //--------------Draw---------------
 

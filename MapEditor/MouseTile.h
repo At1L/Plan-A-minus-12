@@ -6,6 +6,8 @@ class MouseTile
 private:
 	sf::Texture m_tileSheet;
 	sf::Sprite m_tile;
+	sf::Vector2f m_tilePosition;
+	sf::Vector2i m_tileGridPosition;
 	sf::Vector2f m_offset;
 	sf::Vector2i m_tileSize;
 	sf::Vector2f m_tileScale;
@@ -22,6 +24,6 @@ public:
 	void Update(double deltaTime, sf::Vector2f mousePosition);
 	void Draw(sf::RenderWindow& window);
 
-	bool IsMouseClickedOnGrid(const sf::Vector2f& tilePosition); 
+	bool IsMouseClickedOnGrid(sf::Vector2f& tilePosition, const sf::Vector2f& mousePosition);
 };
 
