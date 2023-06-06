@@ -10,6 +10,7 @@ Skeleton::Skeleton(int hp, float speed) : health(hp), m_speed(speed)
 
 Skeleton::~Skeleton()
 {
+    
 }
 
 void Skeleton::ChangeHealth(int hp)

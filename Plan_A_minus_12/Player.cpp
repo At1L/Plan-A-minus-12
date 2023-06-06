@@ -5,8 +5,9 @@
 
 
 Player::Player() :
-    playerSpeed(0.5f),
-    maxFireRate(250.0f), fireRateTimer(0), hp(100)
+    playerSpeed(0.2f), hp(100),
+    bulletMaxFireRate(100.0f), bulletFireRateTimer(0),
+    skeletonMaxDamadgeRate(1000.0f), skeletonDamageRate(0)
 {
 }
 
@@ -16,8 +17,8 @@ Player::~Player()
 
 void Player::Initialize()
 {
-    boundingRectangle.setFillColor(sf::Color::Transparent);
-    boundingRectangle.setOutlineColor(sf::Color::Red);
+    boundingRectangle.setFillColor(sf::Color::Transparent); 
+    boundingRectangle.setOutlineColor(sf::Color::Red); 
     boundingRectangle.setOutlineThickness(1);
     hp = 100;
     size = sf::Vector2i(24, 32);  
@@ -49,7 +50,7 @@ void Player::Load()
         std::cout << "ERROR\n";
 }
 
-void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePosition)
+void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
 {
 
     //Moving up
@@ -75,39 +76,52 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
         sprite.setPosition(position + sf::Vector2f(1, 0) * playerSpeed * (float)deltaTime);
     }
     //--------------------------BULLET--------------------------
-    fireRateTimer += deltaTime;
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && fireRateTimer >= maxFireRate)
+    bulletFireRateTimer += deltaTime;
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && bulletFireRateTimer >= bulletMaxFireRate)
     {
-        bullets.push_back(Bullet());
+        bullets.push_back(new Bullet());
         int i = bullets.size() - 1;
-        bullets[i].Initialize(sprite.getPosition(), mousePosition, 0.5f);
-        bullets[i].Load();
-        fireRateTimer = 0;
+        bullets[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        bullets[i]->Load();
+        bulletFireRateTimer = 0;
     }
     for (size_t i = 0; i < bullets.size(); ++i)
     {
-        bullets[i].Update(deltaTime);
-        if (skeleton.health > 0) {
-            if (Math::DidRectCollide(bullets[i].GetGlobalBounds(), skeleton.sprite.getGlobalBounds())) 
+        bullets[i]->Update(deltaTime);
+        
+    }
+    healthText.setString(std::to_string(hp));
+    healthText.setPosition(sprite.getPosition());
+    boundingRectangle.setPosition(sprite.getPosition());
+}
+
+void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
+{
+    for (size_t i = 0; i < bullets.size(); ++i)
+    {
+        bullets[i]->Update(deltaTime);
+        if (skeleton->health > 0) {
+            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds())) 
             {
-                skeleton.ChangeHealth(-10); 
+                skeleton->ChangeHealth(-10); 
                 bullets.erase(bullets.begin() + i); 
                 std::cout << "Collision" << "\n";
             }
         }
     }
-    
-
     //--------------------------BULLET--------------------------
+    //--------------------------SKELETON------------------------
     boundingRectangle.setPosition(sprite.getPosition());
-    if (abs(skeleton.sprite.getPosition().x - sprite.getPosition().x) < 5
-        && abs(skeleton.sprite.getPosition().y - sprite.getPosition().y) < 5)
+    skeletonDamageRate += deltaTime;
+    if (Math::DidRectCollide(skeleton->sprite.getGlobalBounds(), this->sprite.getGlobalBounds()) && skeletonDamageRate >= skeletonMaxDamadgeRate)
     {
         hp--;
-  
+        skeletonDamageRate = 0;
+        std::cout << "Collision" << "\n";
     }
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
+    //--------------------------SKELETON------------------------
 }
 
 void Player::Draw(sf::RenderWindow& window)
@@ -116,6 +130,6 @@ void Player::Draw(sf::RenderWindow& window)
     window.draw(boundingRectangle);
     window.draw(healthText);
     for (size_t i = 0; i < bullets.size(); ++i) 
-        bullets[i].Draw(window); 
+        bullets[i]->Draw(window); 
 
 }
