@@ -7,6 +7,7 @@
 
 #include "Rasengun.h"
 #include "Amaterasu.h"
+#include "Fireball.h"
 class Player
 {
 private:
@@ -22,6 +23,8 @@ private:
 	sf::Vector2i size;
 	float playerSpeed;
 	int hp;
+
+	//fireball
 
 	//shuriken
 	float bulletMaxFireRate;
