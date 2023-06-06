@@ -5,6 +5,8 @@
 #include "FrameRate.h"
 #include "Map.h"
 #include "MapLoader.h"
+#include <vector>
+#include <random>
 int main()
 {
     //--------------INITIALIZE---------------
@@ -16,14 +18,23 @@ int main()
     //--------------INITIALIZE---------------
     FrameRate frameRate;
     Map map;
-    Skeleton skeleton(100, 0); 
-    Player player; 
 
+    std::vector<Skeleton> skeletons;
+    Player player;
+    for (int i = 0; i < 4; i++)
+    {
+        Skeleton skeleton(100, 0);
+        skeletons.push_back(skeleton);
+    }
     MapLoader mapLoader;
     //--------------INITIALIZE---------------
     frameRate.Initialize();
     map.Initialize();
-    skeleton.Initialize();
+    for (int i = 0; i < 4; i++)
+    {
+        
+        skeletons[i].Initialize();
+    }
     player.Initialize();  
     //--------------INITIALIZE---------------
 
@@ -31,7 +42,18 @@ int main()
     //--------------LOAD---------------
     frameRate.Load();
     map.Load("assets/maps/level1.rmap");
-    skeleton.Load();
+   
+    srand(time(0));
+    for (int i = 0; i < skeletons.size(); i++)
+    {
+        float X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980;
+        std::cout << X << ' ' << Y << '\n';
+        while (abs(X - 100) < 100 && abs(Y - 100) < 100)
+        {
+            X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980;
+        }
+        skeletons[i].Load(X, Y);
+    }
    
     player.Load();
     //--------------LOAD---------------
@@ -54,14 +76,22 @@ int main()
 
         frameRate.Update(deltaTime);
         map.Update(deltaTime);
-        skeleton.Update(player.sprite.getPosition(), deltaTime);
-        player.Update(deltaTime, skeleton, mousePosition);
+        for (int i = 0; i < skeletons.size(); i++)
+        {
+            skeletons[i].Update(player.sprite.getPosition(), deltaTime);
+            player.Update(deltaTime, skeletons[i], mousePosition);
+        }
+        
+        
         //--------------Update---------------
         
         //--------------Draw---------------
         window.clear(sf::Color::Black);  
         map.Draw(window);
-        skeleton.Draw(window);
+        for (int i = 0; i < skeletons.size(); i++)
+        {
+            skeletons[i].Draw(window);
+        }
         player.Draw(window);
         frameRate.Draw(window); 
         window.display();  

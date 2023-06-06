@@ -3,6 +3,7 @@
 #include <random>
 #include <iostream>
 
+
 Skeleton::Skeleton(int hp, float speed) : health(hp), m_speed(speed)
 {
 }
@@ -26,18 +27,9 @@ void Skeleton::Initialize()
     size = sf::Vector2i(64, 64);
 }
 
-void Skeleton::Load()
+void Skeleton::Load(float X, float Y)
 {
-    srand(time(0));
-    float X = (rand()* rand() + rand()) % 1820;
-    float Y = (rand() * rand() + rand()) % 980;
-    while (abs(X - 100) < 100 && abs(Y - 100) < 100)
-    {
-        srand(time(0));
-        X = (rand() * rand() + rand()) % 1920;
-        Y = (rand() * rand() + rand()) % 1080;
-    }
-    std::cout << X << ' ' << Y << '\n';
+    //std::cout << X << ' ' << Y << '\n';
     health = 100;
     if (font.loadFromFile("Assets/Fonts/arial.ttf")) {
         std::cout << "Font loaded\n";
@@ -61,6 +53,7 @@ void Skeleton::Load()
 
         boundingRectangle.setSize(sf::Vector2f(size.x * sprite.getScale().x, size.y * sprite.getScale().y));
     }
+   
 }
 
 void Skeleton::Update(const sf::Vector2f& target, double deltaTime)

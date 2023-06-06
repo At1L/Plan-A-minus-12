@@ -21,7 +21,7 @@ public:
 
 	void ChangeHealth(int hp);
 	void Initialize();
-	void Load();
+	void Load(float X, float Y);
 	void Update(const sf::Vector2f& target, double deltaTime);
 	void Draw(sf::RenderWindow& window);
 
