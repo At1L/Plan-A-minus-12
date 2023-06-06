@@ -23,7 +23,7 @@ int main()
     Player player;
     for (int i = 0; i < 4; i++)
     {
-        Skeleton skeleton(100, 0);
+        Skeleton skeleton(100, 0.1f);
         skeletons.push_back(skeleton);
     }
     MapLoader mapLoader;

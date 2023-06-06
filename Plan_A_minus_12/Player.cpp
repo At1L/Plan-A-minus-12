@@ -6,7 +6,8 @@
 
 Player::Player() :
     playerSpeed(0.2f), hp(100),
-    bulletMaxFireRate(1000.0f), bulletFireRateTimer(0)
+    bulletMaxFireRate(1000.0f), bulletFireRateTimer(0),
+    skeletonMaxDamadgeRate(1000.0f), skeletonDamageRate(0)
 {
 }
 
@@ -99,9 +100,11 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
     //--------------------------BULLET--------------------------
     //--------------------------SKELETON------------------------
     boundingRectangle.setPosition(sprite.getPosition());
-    if (Math::DidRectCollide(skeleton.sprite.getGlobalBounds(), this->sprite.getGlobalBounds()))
+    skeletonDamageRate += deltaTime;
+    if (Math::DidRectCollide(skeleton.sprite.getGlobalBounds(), this->sprite.getGlobalBounds()) && skeletonDamageRate >= skeletonMaxDamadgeRate)
     {
         hp--;
+        skeletonDamageRate = 0;
         std::cout << "Collision" << "\n";
     }
     healthText.setString(std::to_string(hp));
