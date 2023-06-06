@@ -1,5 +1,6 @@
 #include "Skeleton.h"
 #include "Math.h"
+#include <random>
 #include <iostream>
 
 Skeleton::Skeleton(int hp, float speed) : health(hp), m_speed(speed)
@@ -27,6 +28,16 @@ void Skeleton::Initialize()
 
 void Skeleton::Load()
 {
+    srand(time(0));
+    float X = (rand()* rand() + rand()) % 1820;
+    float Y = (rand() * rand() + rand()) % 980;
+    while (abs(X - 100) < 100 && abs(Y - 100) < 100)
+    {
+        srand(time(0));
+        X = (rand() * rand() + rand()) % 1920;
+        Y = (rand() * rand() + rand()) % 1080;
+    }
+    std::cout << X << ' ' << Y << '\n';
     health = 100;
     if (font.loadFromFile("Assets/Fonts/arial.ttf")) {
         std::cout << "Font loaded\n";
@@ -40,7 +51,7 @@ void Skeleton::Load()
     {
         std::cout << "Skeleton Loaded\n";
         sprite.setTexture(texture);
-        sprite.setPosition(sf::Vector2f(800, 400));
+        sprite.setPosition(sf::Vector2f(X,Y));
 
         int XIndex = 1;
         int YIndex = 2;
