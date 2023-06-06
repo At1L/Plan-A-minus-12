@@ -274,10 +274,10 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
     //--------------------------FIREBALL----------------------
     for (size_t i = 0; i < fireball.size(); ++i)
     {
-        if (boss_1.health > 0) {
-            if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), boss_1.sprite.getGlobalBounds()))
+        if (boss_1->health > 0) {
+            if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1.ChangeHealth(-50);
+                boss_1->ChangeHealth(-50);
                 fireball.erase(fireball.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -329,10 +329,10 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
     //--------------------------FIREBALL----------------------
     for (size_t i = 0; i < fireball.size(); ++i)
     {
-        if (boss_2.health > 0) {
-            if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), boss_2.sprite.getGlobalBounds()))
+        if (boss_2->health > 0) {
+            if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2.ChangeHealth(-50);
+                boss_2->ChangeHealth(-50);
                 fireball.erase(fireball.begin() + i);
                 std::cout << "Collision" << "\n";
             }
