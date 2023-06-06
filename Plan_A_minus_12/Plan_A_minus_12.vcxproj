@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Amaterasu.cpp" />
+    <ClCompile Include="Boss_1.cpp" />
+    <ClCompile Include="Boss_2.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="FrameRate.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -158,9 +161,13 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Plan_A_minus_12.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Rasengun.cpp" />
     <ClCompile Include="Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Amaterasu.h" />
+    <ClInclude Include="Boss_1.h" />
+    <ClInclude Include="Boss_2.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="FrameRate.h" />
     <ClInclude Include="Header.h" />
@@ -169,6 +176,7 @@
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Rasengun.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>

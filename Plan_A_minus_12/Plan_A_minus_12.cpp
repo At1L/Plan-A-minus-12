@@ -7,6 +7,8 @@
 #include "MapLoader.h"
 #include <vector>
 #include <random>
+#include "Boss_1.h"
+#include "Boss_2.h"
 int main()
 {
     //--------------INITIALIZE---------------
@@ -34,9 +36,14 @@ int main()
 
 
 
-
+    int wave = 0;
 
     std::vector<Skeleton*>skeletons;
+
+    Boss_1 boss_1(1000, 0.1f);
+
+    Boss_2 boss_2(1000, 0.1f);
+
     Player player;
     for (int i = 0; i < 4; i++)
     {
@@ -100,7 +107,7 @@ int main()
             }
         }
 
-        if (skeletons.size() == 0) 
+        if (skeletons.size() == 0 && wave < 3) 
         {
             skeletons.clear();  
             for (int i = 0; i < 4; i++) 
@@ -118,9 +125,43 @@ int main()
                 }
                 skeletons[i]->Load(X, Y); 
             }
+
+            wave++;
+            std::cout << wave << '\n';
         }
 
+        if (wave == 3 && skeletons.size() == 0)
+        {
+            boss_1.Initialize();
+            boss_1.Load(800,600);
+            wave++;
+        }
+
+        if (wave == 4)
+        {
+            boss_1.Update(player.sprite.getPosition(), deltaTime);
+            player.Update_Boss_1(deltaTime, boss_1);
+        }
+
+        if(boss_1.health <= 0 && wave == 4)
+        {
+            wave++;
+            //boss_1.~Boss_1();
+        }
+
+        if (wave == 5)
+        {
+            boss_2.Initialize();
+            boss_2.Load(800, 600);
+            wave++;
+        }
         
+        if (wave == 6)
+        {
+            boss_2.Update(player.sprite.getPosition(), deltaTime);
+            player.Update_Boss_2(deltaTime, boss_2);
+        }
+
         //--------------Update---------------
         
         //--------------Draw---------------
@@ -135,6 +176,8 @@ int main()
             
         }
         player.Draw(window);
+        boss_1.Draw(window);
+        boss_2.Draw(window);
         frameRate.Draw(window); 
         window.display();  
         //--------------Draw---------------

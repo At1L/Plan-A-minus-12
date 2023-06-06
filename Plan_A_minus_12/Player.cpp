@@ -103,9 +103,9 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds())) 
             {
-                skeleton->ChangeHealth(-10); 
+                skeleton->ChangeHealth(-100); 
                 bullets.erase(bullets.begin() + i); 
-                std::cout << "Collision" << "\n";
+                //std::cout << "Collision" << "\n";
             }
         }
     }
@@ -117,11 +117,43 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
     {
         hp--;
         skeletonDamageRate = 0;
-        std::cout << "Collision" << "\n";
+        //std::cout << "Collision" << "\n";
     }
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
     //--------------------------SKELETON------------------------
+}
+
+void Player::Update_Boss_1(double deltaTime, Boss_1& boss_1)
+{
+    for (size_t i = 0; i < bullets.size(); ++i)
+    {
+        //bullets[i]->Update(deltaTime);
+        if (boss_1.health > 0) {
+            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), boss_1.sprite.getGlobalBounds()))
+            {
+                boss_1.ChangeHealth(-100);
+                bullets.erase(bullets.begin() + i);
+                //std::cout << "Collision" << "\n";
+            }
+        }
+    }
+}
+
+void Player::Update_Boss_2(double deltaTime, Boss_2& boss_2)
+{
+    for (size_t i = 0; i < bullets.size(); ++i)
+    {
+        //bullets[i]->Update(deltaTime);
+        if (boss_2.health > 0) {
+            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), boss_2.sprite.getGlobalBounds()))
+            {
+                boss_2.ChangeHealth(-100);
+                bullets.erase(bullets.begin() + i);
+                //std::cout << "Collision" << "\n";
+            }
+        }
+    }
 }
 
 void Player::Draw(sf::RenderWindow& window)

@@ -30,6 +30,18 @@
     <ClCompile Include="Skeleton.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Amaterasu.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Rasengun.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_1.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_2.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -60,6 +72,18 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Amaterasu.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasengun.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss_1.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss_2.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

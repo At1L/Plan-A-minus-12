@@ -1,4 +1,5 @@
 #include "Amaterasu.h"
+#include "Math.h"
 Amaterasu::Amaterasu() : speed(0), damage(0)
 {
 }

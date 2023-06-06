@@ -20,7 +20,7 @@ void Bullet::Load()
 {
 	if (texture.loadFromFile("assets/attack/shuriken.png"))
 	{
-		std::cout << "Shuriken loaded\n";
+		//std::cout << "Shuriken loaded\n";
 		sprite.setTexture(texture);
 
 		int XIndex = 1;
