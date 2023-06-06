@@ -24,13 +24,13 @@ int main()
         sf::Color(255, 255, 255, 255),   //Color (red, green, blue, brightness)
         2); 
 
-    MouseTile mouseTile(sf::Vector2i(16, 16),   //cells size
+    MouseTile mouseTile(grid, sf::Vector2i(16, 16),   //cells size
         sf::Vector2f(10, 10),                   //scale
         sf::Vector2f(100, 50));                 //grid position
 
     Map map(grid, mouseTile);
 
-    Button button(sf::Vector2f(100, 5), sf::Vector2f(1, 1));
+    Button button(sf::Vector2f(100, 10), sf::Vector2f(1, 1));
     //--------------INITIALIZE---------------
     grid.Initialize();
     mouseTile.Initialize();
@@ -65,6 +65,10 @@ int main()
         mouseTile.Update(deltaTime, mousePosition);
         map.Update(deltaTime, mousePosition);
         button.Update(deltaTime, mousePosition);
+
+        if (button.IsPressed()) {
+            std::cout << "AJAHAHAHAA, YOU'VE TOUCHED A BUTTON\n";
+        }
         //--------------Draw---------------
         window.clear(sf::Color::Black);
         grid.Draw(window);

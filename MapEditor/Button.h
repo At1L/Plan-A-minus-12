@@ -11,6 +11,10 @@ namespace GUI
 
 		const sf::Vector2f& m_position;
 		const sf::Vector2f& m_scale;
+		const sf::Vector2f* m_mousePosition;
+
+		bool isMousePressed;
+		bool isMouseReleased;
 	public:
 		Button(const sf::Vector2f& position, 
 			const sf::Vector2f& scale);
@@ -20,5 +24,7 @@ namespace GUI
 		void Load();
 		void Update(double deltaTime, const sf::Vector2f& mousePosition);
 		void Draw(sf::RenderWindow& window);
+
+		bool IsPressed();
 	};
 }
