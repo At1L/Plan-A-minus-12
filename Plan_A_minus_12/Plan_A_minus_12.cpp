@@ -37,6 +37,8 @@ int main()
 
 
     int wave = 0;
+    int skeletons_num = 4;
+    int skeleton_hp = 100;
 
     std::vector<Skeleton*>skeletons;
 
@@ -45,10 +47,12 @@ int main()
     Boss_2* boss_2 = new Boss_2(1000, 0.1f);
 
     Player player;
+
     for (int i = 0; i < 4; i++)
     {
-        skeletons.push_back(new Skeleton(100, 0.1f));
+        skeletons.push_back(new Skeleton(skeleton_hp, 0.1f));
     }
+    
     MapLoader mapLoader;
     //--------------INITIALIZE---------------
     frameRate.Initialize();
@@ -109,10 +113,12 @@ int main()
 
         if (skeletons.size() == 0 && wave < 3) 
         {
-            skeletons.clear();  
-            for (int i = 0; i < 4; i++) 
+            skeletons.clear();
+            skeletons_num++;
+            skeleton_hp += 25;
+            for (int i = 0; i < skeletons_num; i++) 
             {
-                skeletons.push_back(new Skeleton(100, 0.1f));  
+                skeletons.push_back(new Skeleton(skeleton_hp, 0.1f));  
                 skeletons[i]->Initialize();  
             }
             for (int i = 0; i < skeletons.size(); i++) 
@@ -153,9 +159,11 @@ int main()
         if (skeletons.size() == 0 && wave > 4 && wave < 9)
         {
             skeletons.clear();
-            for (int i = 0; i < 4; i++)
+            skeletons_num++;
+            skeleton_hp += 25;
+            for (int i = 0; i < skeletons_num; i++)
             {
-                skeletons.push_back(new Skeleton(100, 0.1f));
+                skeletons.push_back(new Skeleton(skeleton_hp, 0.1f));
                 skeletons[i]->Initialize();
             }
             for (int i = 0; i < skeletons.size(); i++)
