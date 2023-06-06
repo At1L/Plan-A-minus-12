@@ -20,8 +20,6 @@ private:
 	//shuriken
 	float bulletMaxFireRate;
 	float bulletFireRateTimer;
-	float playerSpeed;
-	int hp;
 
 
 	//skeleton

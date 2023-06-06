@@ -83,7 +83,7 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
         int i = bullets.size() - 1;
         bullets[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
         bullets[i]->Load();
-        fireRateTimer = 0;
+        bulletFireRateTimer = 0;
     }
     for (size_t i = 0; i < bullets.size(); ++i)
     {
