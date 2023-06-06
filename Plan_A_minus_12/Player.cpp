@@ -50,7 +50,7 @@ void Player::Load()
         std::cout << "ERROR\n";
 }
 
-void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePosition)
+void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
 {
 
     //Moving up
@@ -85,14 +85,18 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
         bullets[i].Load();
         bulletFireRateTimer = 0;
     }
+}
+
+void Player::UpdateSkeleton(double deltaTime, Skeleton& skeleton)
+{
     for (size_t i = 0; i < bullets.size(); ++i)
     {
         bullets[i].Update(deltaTime);
         if (skeleton.health > 0) {
-            if (Math::DidRectCollide(bullets[i].GetGlobalBounds(), skeleton.sprite.getGlobalBounds())) 
+            if (Math::DidRectCollide(bullets[i].GetGlobalBounds(), skeleton.sprite.getGlobalBounds()))
             {
-                skeleton.ChangeHealth(-10); 
-                bullets.erase(bullets.begin() + i); 
+                skeleton.ChangeHealth(-10);
+                bullets.erase(bullets.begin() + i);
                 std::cout << "Collision" << "\n";
             }
         }
