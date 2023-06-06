@@ -5,7 +5,7 @@
 
 
 Player::Player() :
-    playerSpeed(0.5f),
+    playerSpeed(0.2f),
     maxFireRate(250.0f), fireRateTimer(0), hp(100)
 {
 }
@@ -78,17 +78,17 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
     fireRateTimer += deltaTime;
     if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && fireRateTimer >= maxFireRate)
     {
-        bullets.push_back(Bullet());
+        bullets.push_back(new Bullet());
         int i = bullets.size() - 1;
-        bullets[i].Initialize(sprite.getPosition(), mousePosition, 0.5f);
-        bullets[i].Load();
+        bullets[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        bullets[i]->Load();
         fireRateTimer = 0;
     }
     for (size_t i = 0; i < bullets.size(); ++i)
     {
-        bullets[i].Update(deltaTime);
+        bullets[i]->Update(deltaTime);
         if (skeleton.health > 0) {
-            if (Math::DidRectCollide(bullets[i].GetGlobalBounds(), skeleton.sprite.getGlobalBounds())) 
+            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), skeleton.sprite.getGlobalBounds())) 
             {
                 skeleton.ChangeHealth(-10); 
                 bullets.erase(bullets.begin() + i); 
@@ -116,6 +116,6 @@ void Player::Draw(sf::RenderWindow& window)
     window.draw(boundingRectangle);
     window.draw(healthText);
     for (size_t i = 0; i < bullets.size(); ++i) 
-        bullets[i].Draw(window); 
+        bullets[i]->Draw(window); 
 
 }

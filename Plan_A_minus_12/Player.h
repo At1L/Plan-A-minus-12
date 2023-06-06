@@ -7,7 +7,7 @@ class Player
 private:
 	sf::Texture texture;
 
-	std::vector<Bullet> bullets; 
+	std::vector<Bullet*> bullets; 
 
 	sf::Text healthText;
 
