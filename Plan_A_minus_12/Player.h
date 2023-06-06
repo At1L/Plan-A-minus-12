@@ -17,6 +17,7 @@ private:
 	std::vector<Bullet*> bullets; 
 	std::vector<Rasengun*> rasenguns;
 	std::vector<Amaterasu*> amaterasus;
+	std::vector<Fireball*> fireball;
 	sf::Text healthText;
 	sf::Font font;
 	sf::RectangleShape boundingRectangle;
@@ -37,6 +38,10 @@ private:
 	//amaterasu
 	float amaterasuMaxFireRate;
 	float amaterasuFireRateTimer;
+
+	//fireball
+	float fireballMaxFireRate;
+	float fireballFireRateTimer; 
 
 	//skeleton
 	float skeletonMaxDamadgeRate;

@@ -14,7 +14,7 @@ void Fireball::Initialize(const sf::Vector2f& position, const sf::Vector2f& targ
 	speed = FireballSpeed;
 	sprite.setPosition(position);
 	direction = Math::NormalaizeVector(target - position);
-	size = sf::Vector2i(32, 29);
+	size = sf::Vector2i(78, 70);
 }
 
 void Fireball::Load()
@@ -24,11 +24,11 @@ void Fireball::Load()
 		//std::cout << "Shuriken loaded\n";
 		sprite.setTexture(texture);
 
-		int XIndex = 1;
+		int XIndex = 0;
 		int YIndex = 0;
 		//32, 0, 32, 29 
 		sprite.setTextureRect(sf::IntRect(XIndex * size.x, YIndex * size.y, size.x, size.y));
-		sprite.scale(sf::Vector2f(2, 2));
+		//sprite.scale(sf::Vector2f(2, 2));
 	}
 }
 
