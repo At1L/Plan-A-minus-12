@@ -1,5 +1,4 @@
 #include "MouseTile.h"
-
 MouseTile::MouseTile(const sf::Vector2i& tileSize,
 	const sf::Vector2f& tileScale, 
 	const sf::Vector2f& offset)

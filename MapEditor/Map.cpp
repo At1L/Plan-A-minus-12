@@ -1,7 +1,7 @@
 #include "Map.h"
 #include <iostream>
 
-Map::Map(const Grid& grid, const MouseTile& mouseTile) : 
+Map::Map(const Grid& grid, MouseTile& mouseTile) : 
 	m_grid(grid), m_mouseTile(mouseTile), m_mapSprites(nullptr)
 {
 }

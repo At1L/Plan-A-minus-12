@@ -6,6 +6,7 @@ class MouseTile
 private:
 	sf::Texture m_tileSheet;
 	sf::Sprite m_tile;
+
 	sf::Vector2f m_tilePosition;
 	sf::Vector2i m_tileGridPosition;
 	sf::Vector2f m_offset;
