@@ -25,6 +25,9 @@ void MouseTile::Load()
 
 void MouseTile::Update(double deltaTime, const sf::Vector2f& mousePosition)
 {
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		m_tile.setTextureRect(sf::IntRect(12 * m_tileSize.x, 0, m_tileSize.x, m_tileSize.y));
+	}
 	m_tileGridPosition.x = (mousePosition.x - m_offset.x)/(m_tileSize.x * m_tile.getScale().x);
 	m_tileGridPosition.y = (mousePosition.y - m_offset.y) / (m_tileSize.y * m_tileScale.y);
 
@@ -41,13 +44,16 @@ void MouseTile::Draw(sf::RenderWindow& window)
 	window.draw(m_tile);
 }
 
-bool MouseTile::IsMouseClickedOnGrid(sf::Vector2f& tilePosition, const sf::Vector2f& mousePosition) const
+bool MouseTile::IsMouseClickedOnGrid(sf::Vector2f& tilePosition,
+	sf::Vector2i& gridPosition, const sf::Vector2f& mousePosition) const
 {
-	m_tile.getPosition();
+	//m_tile.getPosition();
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left))
 	{
 		
 		//tilePosition = sf::Vector2f(x,y);
+		tilePosition = m_tilePosition;
+		gridPosition = m_tileGridPosition;
 		return true;
 	}
 	return false;

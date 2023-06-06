@@ -1,5 +1,8 @@
 #include "Map.h"
-Map::Map(MouseTile& mouseTile) : m_mouseTile(mouseTile), m_mapSprites(nullptr) 
+#include <iostream>
+
+Map::Map(const Grid& grid, const MouseTile& mouseTile) : 
+	m_grid(grid), m_mouseTile(mouseTile), m_mapSprites(nullptr)
 {
 }
 Map::~Map()
@@ -16,10 +19,15 @@ void Map::Load()
 }
 void Map::Update(double deltaTime, const sf::Vector2f& mousePosition) 
 {
-	sf::Vector2f ww;
-	if (m_mouseTile.IsMouseClickedOnGrid(ww, mousePosition))
-	{
+	//sf::Vector2f ww;
+	sf::Vector2f tilePosition;
+	sf::Vector2i gridPosition;
 
+	if (m_mouseTile.IsMouseClickedOnGrid(tilePosition, gridPosition,
+		mousePosition))
+	{
+		int i = gridPosition.x + gridPosition.y * m_grid.GetTotalCells().x;
+		m_mapSprites[i] = m_mouseTile.GetSprite();
 	}
 }
 void Map::Draw(sf::RenderWindow& window)

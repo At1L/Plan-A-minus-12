@@ -24,6 +24,14 @@ public:
 	void Update(double deltaTime,const sf::Vector2f& mousePosition);
 	void Draw(sf::RenderWindow& window);
 
-	bool IsMouseClickedOnGrid(sf::Vector2f& tilePosition, const sf::Vector2f& mousePosition) const;
+	bool IsMouseClickedOnGrid(sf::Vector2f& tilePosition, 
+		sf::Vector2i& gridPosition, const sf::Vector2f& mousePosition) const;
+
+	//inline const sf::Texture& GetTileSheetTexture() const{
+	//	return m_tileSheet;
+	//}
+	inline const sf::Sprite& GetSprite() const {
+		return m_tile;
+	}
 };
 
