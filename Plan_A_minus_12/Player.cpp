@@ -6,7 +6,7 @@
 
 Player::Player() :
     playerSpeed(0.2f), hp(100),
-    bulletMaxFireRate(1000.0f), bulletFireRateTimer(0),
+    bulletMaxFireRate(100.0f), bulletFireRateTimer(0),
     skeletonMaxDamadgeRate(1000.0f), skeletonDamageRate(0)
 {
 }
@@ -50,7 +50,7 @@ void Player::Load()
         std::cout << "ERROR\n";
 }
 
-void Player::Update(double deltaTime, Skeleton*& skeleton, sf::Vector2f& mousePosition)
+void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
 {
 
     //Moving up
@@ -85,6 +85,18 @@ void Player::Update(double deltaTime, Skeleton*& skeleton, sf::Vector2f& mousePo
         bullets[i]->Load();
         bulletFireRateTimer = 0;
     }
+    for (size_t i = 0; i < bullets.size(); ++i)
+    {
+        bullets[i]->Update(deltaTime);
+        
+    }
+    healthText.setString(std::to_string(hp));
+    healthText.setPosition(sprite.getPosition());
+    boundingRectangle.setPosition(sprite.getPosition());
+}
+
+void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
+{
     for (size_t i = 0; i < bullets.size(); ++i)
     {
         bullets[i]->Update(deltaTime);

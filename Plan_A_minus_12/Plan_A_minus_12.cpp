@@ -75,10 +75,11 @@ int main()
 
         frameRate.Update(deltaTime);
         map.Update(deltaTime);
+        player.Update(deltaTime, mousePosition);
         for (int i = 0; i < skeletons.size(); i++)
         {
             skeletons[i]->Update(player.sprite.getPosition(), deltaTime);
-            player.Update(deltaTime, skeletons[i], mousePosition);
+            player.UpdateSkeleton(deltaTime, skeletons[i]);
             if (skeletons[i]->health <= 0)
             {
                 skeletons.erase(skeletons.begin() + i);
