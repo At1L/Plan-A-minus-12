@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Skeleton.h"
 #include "Bullet.h"
+#include "Rasengun.h"
 class Player
 {
 private:
@@ -9,6 +10,7 @@ private:
 	sf::Texture texture;
 
 	std::vector<Bullet*> bullets; 
+	std::vector<Rasengun*> rasenguns;
 
 	sf::Text healthText;
 	sf::Font font;
@@ -21,6 +23,9 @@ private:
 	float bulletMaxFireRate;
 	float bulletFireRateTimer;
 
+	//rasengun
+	float rasengunMaxFireRate;
+	float rasengunFireRateTimer; 
 
 	//skeleton
 	float skeletonMaxDamadgeRate;
