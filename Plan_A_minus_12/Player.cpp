@@ -11,7 +11,8 @@ Player::Player() :
     boss1MaxDamadgeRate(1000.0f), boss1DamageRate(0),
     boss2MaxDamadgeRate(1000.0f), boss2DamageRate(0),
     rasengunMaxFireRate(3000.0f), rasengunFireRateTimer(0),
-    amaterasuMaxFireRate(3000.0f), amaterasuFireRateTimer(0)
+    amaterasuMaxFireRate(3000.0f), amaterasuFireRateTimer(0),
+    fireballMaxFireRate(3000.0f), fireballFireRateTimer(0)
 
 {
 }
@@ -127,6 +128,21 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
         amaterasus[i]->Update(deltaTime);
     }
     //--------------------------AMATERASU------------------------
+    //--------------------------FIREBALL------------------------
+    fireballFireRateTimer += deltaTime;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) && fireballMaxFireRate <= fireballFireRateTimer)
+    {
+        fireball.push_back(new Fireball());
+        int i = fireball.size() - 1;
+        fireball[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        fireball[i]->Load();
+        fireballFireRateTimer = 0;
+    }
+    for (size_t i = 0; i < fireball.size(); i++)
+    {
+        fireball[i]->Update(deltaTime);
+    }
+    //--------------------------FIREBALL------------------------
     //--------------------------HEALTH--------------------------
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
@@ -174,6 +190,19 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         }
     }
     //--------------------------AMATERASUS----------------------
+    //--------------------------FIREBALL----------------------
+    for (size_t i = 0; i < fireball.size(); ++i)
+    {
+        if (skeleton->health > 0) {
+            if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
+            {
+                skeleton->ChangeHealth(-50);
+                fireball.erase(fireball.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------FIREBALL----------------------
     //--------------------------SKELETON------------------------
     boundingRectangle.setPosition(sprite.getPosition());
     skeletonDamageRate += deltaTime;
@@ -242,6 +271,19 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
     //--------------------------BOSS1---------------------------
+    //--------------------------FIREBALL----------------------
+    for (size_t i = 0; i < fireball.size(); ++i)
+    {
+        if (boss_1.health > 0) {
+            if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), boss_1.sprite.getGlobalBounds()))
+            {
+                boss_1.ChangeHealth(-50);
+                fireball.erase(fireball.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------FIREBALL----------------------
 }
 
 void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
@@ -284,6 +326,18 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
         }
     }
     //--------------------------AMATERASUS----------------------
+    //--------------------------FIREBALL----------------------
+    for (size_t i = 0; i < fireball.size(); ++i)
+    {
+        if (boss_2.health > 0) {
+            if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), boss_2.sprite.getGlobalBounds()))
+            {
+                boss_2.ChangeHealth(-50);
+                fireball.erase(fireball.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
     //--------------------------BOSS2---------------------------
     boundingRectangle.setPosition(sprite.getPosition());
     boss2DamageRate += deltaTime;
@@ -309,5 +363,6 @@ void Player::Draw(sf::RenderWindow& window)
         rasenguns[i]->Draw(window);
     for (size_t i = 0; i < amaterasus.size(); ++i)
         amaterasus[i]->Draw(window);
-
+    for (size_t i = 0; i < fireball.size(); ++i)
+        fireball[i]->Draw(window);
 }

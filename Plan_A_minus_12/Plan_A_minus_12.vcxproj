@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -155,13 +155,16 @@
     <ClCompile Include="Boss_1.cpp" />
     <ClCompile Include="Boss_2.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="FrameRate.cpp" />
+    <ClCompile Include="GoldenAtc.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Plan_A_minus_12.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rasengun.cpp" />
+    <ClCompile Include="Rasenshuriken.cpp" />
     <ClCompile Include="Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,7 +172,9 @@
     <ClInclude Include="Boss_1.h" />
     <ClInclude Include="Boss_2.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Fireball.h" />
     <ClInclude Include="FrameRate.h" />
+    <ClInclude Include="GoldenAtc.h" />
     <ClInclude Include="Header.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapData.h" />
@@ -177,6 +182,7 @@
     <ClInclude Include="Math.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Rasengun.h" />
+    <ClInclude Include="Rasenshuriken.h" />
     <ClInclude Include="Skeleton.h" />
     <ClInclude Include="Tile.h" />
   </ItemGroup>

@@ -42,6 +42,15 @@
     <ClCompile Include="Boss_2.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Fireball.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="GoldenAtc.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="Rasenshuriken.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h">
@@ -84,6 +93,15 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="Boss_2.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireball.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Rasenshuriken.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="GoldenAtc.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
