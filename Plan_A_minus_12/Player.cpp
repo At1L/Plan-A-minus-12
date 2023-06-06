@@ -8,6 +8,8 @@ Player::Player() :
     playerSpeed(0.5f), hp(100),
     bulletMaxFireRate(100.0f), bulletFireRateTimer(0),
     skeletonMaxDamadgeRate(1000.0f), skeletonDamageRate(0),
+    boss1MaxDamadgeRate(1000.0f), boss1DamageRate(0),
+    boss2MaxDamadgeRate(1000.0f), boss2DamageRate(0),
     rasengunMaxFireRate(3000.0f), rasengunFireRateTimer(0),
     amaterasuMaxFireRate(3000.0f), amaterasuFireRateTimer(0)
 
@@ -186,16 +188,16 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
     //--------------------------SKELETON------------------------
 }
 
-void Player::Update_Boss_1(double deltaTime, Boss_1& boss_1)
+void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
 {
     //--------------------------BULLET--------------------------
     for (size_t i = 0; i < bullets.size(); ++i)
     {
         //bullets[i]->Update(deltaTime);
-        if (boss_1.health > 0) {
-            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), boss_1.sprite.getGlobalBounds()))
+        if (boss_1->health > 0) {
+            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1.ChangeHealth(-100);
+                boss_1->ChangeHealth(-100);
                 bullets.erase(bullets.begin() + i);
                 //std::cout << "Collision" << "\n";
             }
@@ -205,10 +207,10 @@ void Player::Update_Boss_1(double deltaTime, Boss_1& boss_1)
     //--------------------------RASENGUN------------------------
     for (size_t i = 0; i < rasenguns.size(); ++i)
     {
-        if (boss_1.health > 0) {
-            if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), boss_1.sprite.getGlobalBounds()))
+        if (boss_1->health > 0) {
+            if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1.ChangeHealth(-50);
+                boss_1->ChangeHealth(-50);
                 rasenguns.erase(rasenguns.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -218,27 +220,39 @@ void Player::Update_Boss_1(double deltaTime, Boss_1& boss_1)
     //--------------------------AMATERASUS----------------------
     for (size_t i = 0; i < amaterasus.size(); ++i)
     {
-        if (boss_1.health > 0) {
-            if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), boss_1.sprite.getGlobalBounds()))
+        if (boss_1->health > 0) {
+            if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1.ChangeHealth(-50);
+                boss_1->ChangeHealth(-50);
                 amaterasus.erase(amaterasus.begin() + i);
                 std::cout << "Collision" << "\n";
             }
         }
     }
     //--------------------------AMATERASUS----------------------
+    //--------------------------BOSS1---------------------------
+    boundingRectangle.setPosition(sprite.getPosition());
+    boss1DamageRate += deltaTime;
+    if (Math::DidRectCollide(boss_1->sprite.getGlobalBounds(), this->sprite.getGlobalBounds()) && boss1DamageRate >= boss1MaxDamadgeRate)
+    {
+        hp-=50;
+        boss1DamageRate = 0;
+        //std::cout << "Collision" << "\n";
+    }
+    healthText.setString(std::to_string(hp));
+    healthText.setPosition(sprite.getPosition());
+    //--------------------------BOSS1---------------------------
 }
 
-void Player::Update_Boss_2(double deltaTime, Boss_2& boss_2)
+void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
 {
     for (size_t i = 0; i < bullets.size(); ++i)
     {
         //bullets[i]->Update(deltaTime);
-        if (boss_2.health > 0) {
-            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), boss_2.sprite.getGlobalBounds()))
+        if (boss_2->health > 0) {
+            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2.ChangeHealth(-100);
+                boss_2->ChangeHealth(-100);
                 bullets.erase(bullets.begin() + i);
                 //std::cout << "Collision" << "\n";
             }
@@ -247,10 +261,10 @@ void Player::Update_Boss_2(double deltaTime, Boss_2& boss_2)
     //--------------------------RASENGUN------------------------
     for (size_t i = 0; i < rasenguns.size(); ++i)
     {
-        if (boss_2.health > 0) {
-            if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), boss_2.sprite.getGlobalBounds()))
+        if (boss_2->health > 0) {
+            if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2.ChangeHealth(-50);
+                boss_2->ChangeHealth(-50);
                 rasenguns.erase(rasenguns.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -260,16 +274,28 @@ void Player::Update_Boss_2(double deltaTime, Boss_2& boss_2)
     //--------------------------AMATERASUS----------------------
     for (size_t i = 0; i < amaterasus.size(); ++i)
     {
-        if (boss_2.health > 0) {
-            if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), boss_2.sprite.getGlobalBounds()))
+        if (boss_2->health > 0) {
+            if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2.ChangeHealth(-50);
+                boss_2->ChangeHealth(-50);
                 amaterasus.erase(amaterasus.begin() + i);
                 std::cout << "Collision" << "\n";
             }
         }
     }
     //--------------------------AMATERASUS----------------------
+    //--------------------------BOSS2---------------------------
+    boundingRectangle.setPosition(sprite.getPosition());
+    boss2DamageRate += deltaTime;
+    if (Math::DidRectCollide(boss_2->sprite.getGlobalBounds(), this->sprite.getGlobalBounds()) && boss2DamageRate >= boss2MaxDamadgeRate)
+    {
+        hp -= 75;
+        boss2DamageRate = 0;
+        //std::cout << "Collision" << "\n";
+    }
+    healthText.setString(std::to_string(hp));
+    healthText.setPosition(sprite.getPosition());
+    //--------------------------BOSS2---------------------------
 }
 
 void Player::Draw(sf::RenderWindow& window)

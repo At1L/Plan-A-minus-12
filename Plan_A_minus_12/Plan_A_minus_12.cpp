@@ -40,9 +40,9 @@ int main()
 
     std::vector<Skeleton*>skeletons;
 
-    Boss_1 boss_1(1000, 0.1f);
+    Boss_1* boss_1 = new Boss_1(1000, 0.1f);
 
-    Boss_2 boss_2(1000, 0.1f);
+    Boss_2* boss_2 = new Boss_2(1000, 0.1f);
 
     Player player;
     for (int i = 0; i < 4; i++)
@@ -132,34 +132,63 @@ int main()
 
         if (wave == 3 && skeletons.size() == 0)
         {
-            boss_1.Initialize();
-            boss_1.Load(800,600);
+            boss_1->Initialize();
+            boss_1->Load(800,600);
+            boss_1->Draw(window);
             wave++;
         }
 
         if (wave == 4)
         {
-            boss_1.Update(player.sprite.getPosition(), deltaTime);
+            boss_1->Update(player.sprite.getPosition(), deltaTime);
             player.Update_Boss_1(deltaTime, boss_1);
         }
 
-        if(boss_1.health <= 0 && wave == 4)
+        if(boss_1->health <= 0 && wave == 4)
         {
             wave++;
-            //boss_1.~Boss_1();
+            boss_1->~Boss_1();
         }
 
-        if (wave == 5)
+        if (skeletons.size() == 0 && wave > 4 && wave < 9)
         {
-            boss_2.Initialize();
-            boss_2.Load(800, 600);
+            skeletons.clear();
+            for (int i = 0; i < 4; i++)
+            {
+                skeletons.push_back(new Skeleton(100, 0.1f));
+                skeletons[i]->Initialize();
+            }
+            for (int i = 0; i < skeletons.size(); i++)
+            {
+                float X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980;
+                std::cout << X << ' ' << Y << '\n';
+                while (abs(X - 100) < 100 && abs(Y - 100) < 100)
+                {
+                    X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980;
+                }
+                skeletons[i]->Load(X, Y);
+            }
+
+            wave++;
+        }
+
+        if (wave == 9 && skeletons.size() == 0)
+        {
+            boss_2->Initialize();
+            boss_2->Load(800, 600);
             wave++;
         }
         
-        if (wave == 6)
+        if (wave == 10)
         {
-            boss_2.Update(player.sprite.getPosition(), deltaTime);
+            boss_2->Update(player.sprite.getPosition(), deltaTime);
             player.Update_Boss_2(deltaTime, boss_2);
+        }
+
+        if (boss_2->health <= 0 && wave ==10)
+        {
+            boss_2->~Boss_2();
+            wave++;
         }
 
         //--------------Update---------------
@@ -176,8 +205,14 @@ int main()
             
         }
         player.Draw(window);
-        boss_1.Draw(window);
-        boss_2.Draw(window);
+        if (boss_1)
+        {
+            boss_1->Draw(window);
+        }
+        if (boss_2)
+        {
+            boss_2->Draw(window);
+        }
         frameRate.Draw(window); 
         window.display();  
         //--------------Draw---------------
