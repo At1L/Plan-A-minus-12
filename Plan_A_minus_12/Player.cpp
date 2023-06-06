@@ -12,8 +12,9 @@ Player::Player() :
     boss2MaxDamadgeRate(1000.0f), boss2DamageRate(0),
     rasengunMaxFireRate(3000.0f), rasengunFireRateTimer(0),
     amaterasuMaxFireRate(3000.0f), amaterasuFireRateTimer(0),
-    fireballMaxFireRate(3000.0f), fireballFireRateTimer(0)
-
+    fireballMaxFireRate(3000.0f), fireballFireRateTimer(0),
+    goldenAtclMaxFireRate(3000.0f), goldenAtcFireRateTimer(0),
+    rasenshurikenlMaxFireRate(3000.0f), rasenshurikenFireRateTimer(0)
 {
 }
 
@@ -143,6 +144,36 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
         fireball[i]->Update(deltaTime);
     }
     //--------------------------FIREBALL------------------------
+    //--------------------------GOLDEN--------------------------
+    goldenAtcFireRateTimer += deltaTime;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) && goldenAtclMaxFireRate <= goldenAtcFireRateTimer)
+    {
+        goldenAtc.push_back(new GoldenAtc());
+        int i = goldenAtc.size() - 1;
+        goldenAtc[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        goldenAtc[i]->Load();
+        goldenAtcFireRateTimer = 0;
+    }
+    for (size_t i = 0; i < goldenAtc.size(); i++)
+    {
+        goldenAtc[i]->Update(deltaTime);
+    }
+    //--------------------------GOLDEN--------------------------
+    //--------------------------rasenshuriken--------------------------
+    rasenshurikenFireRateTimer += deltaTime;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) && rasenshurikenlMaxFireRate <= rasenshurikenFireRateTimer)
+    {
+        rasenshuriken.push_back(new Rasenshuriken());
+        int i = rasenshuriken.size() - 1;
+        rasenshuriken[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        rasenshuriken[i]->Load();
+        rasenshurikenFireRateTimer = 0;
+    }
+    for (size_t i = 0; i < rasenshuriken.size(); i++)
+    {
+        rasenshuriken[i]->Update(deltaTime);
+    }
+    //--------------------------rasenshuriken--------------------------
     //--------------------------HEALTH--------------------------
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
@@ -203,6 +234,32 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         }
     }
     //--------------------------FIREBALL----------------------
+    //--------------------------GOLDEN----------------------
+    for (size_t i = 0; i < goldenAtc.size(); ++i)
+    {
+        if (skeleton->health > 0) {
+            if (Math::DidRectCollide(goldenAtc[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
+            {
+                skeleton->ChangeHealth(-50);
+                goldenAtc.erase(goldenAtc.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------GOLDEN----------------------
+    //--------------------------rasenshuriken----------------------
+    for (size_t i = 0; i < rasenshuriken.size(); ++i)
+    {
+        if (skeleton->health > 0) {
+            if (Math::DidRectCollide(rasenshuriken[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
+            {
+                skeleton->ChangeHealth(-50);
+                rasenshuriken.erase(rasenshuriken.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------rasenshuriken----------------------
     //--------------------------SKELETON------------------------
     boundingRectangle.setPosition(sprite.getPosition());
     skeletonDamageRate += deltaTime;
@@ -283,7 +340,33 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
             }
         }
     }
-    //--------------------------FIREBALL----------------------
+    //--------------------------FIREBALL---------------------- 
+    //--------------------------GOLDEN----------------------
+    for (size_t i = 0; i < goldenAtc.size(); ++i) 
+    { 
+        if (boss_1->health > 0) { 
+            if (Math::DidRectCollide(goldenAtc[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds())) 
+            { 
+                boss_1->ChangeHealth(-50); 
+                goldenAtc.erase(goldenAtc.begin() + i); 
+                std::cout << "Collision" << "\n"; 
+            }
+        }
+    }
+    //--------------------------GOLDEN----------------------
+    //--------------------------rasenshuriken----------------------
+    for (size_t i = 0; i < rasenshuriken.size(); ++i)
+    {
+        if (boss_1->health > 0) {
+            if (Math::DidRectCollide(rasenshuriken[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
+            {
+                boss_1->ChangeHealth(-50);
+                rasenshuriken.erase(rasenshuriken.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------rasenshuriken----------------------
 }
 
 void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
@@ -350,6 +433,32 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
     //--------------------------BOSS2---------------------------
+    //--------------------------GOLDEN----------------------
+    for (size_t i = 0; i < goldenAtc.size(); ++i)
+    {
+        if (boss_2->health > 0) {
+            if (Math::DidRectCollide(goldenAtc[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
+            {
+                boss_2->ChangeHealth(-50);
+                goldenAtc.erase(goldenAtc.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------GOLDEN----------------------
+    //--------------------------rasenshuriken----------------------
+    for (size_t i = 0; i < rasenshuriken.size(); ++i)
+    {
+        if (boss_2->health > 0) {
+            if (Math::DidRectCollide(rasenshuriken[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
+            {
+                boss_2->ChangeHealth(-50);
+                rasenshuriken.erase(rasenshuriken.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------rasenshuriken----------------------
 }
 
 void Player::Draw(sf::RenderWindow& window)
@@ -365,4 +474,8 @@ void Player::Draw(sf::RenderWindow& window)
         amaterasus[i]->Draw(window);
     for (size_t i = 0; i < fireball.size(); ++i)
         fireball[i]->Draw(window);
+    for (size_t i = 0; i < goldenAtc.size(); ++i)
+        goldenAtc[i]->Draw(window);
+    for (size_t i = 0; i < rasenshuriken.size(); ++i)
+        rasenshuriken[i]->Draw(window);
 }

@@ -8,6 +8,8 @@
 #include "Rasengun.h"
 #include "Amaterasu.h"
 #include "Fireball.h"
+#include "GoldenAtc.h"
+#include "Rasenshuriken.h"
 class Player
 {
 private:
@@ -18,6 +20,8 @@ private:
 	std::vector<Rasengun*> rasenguns;
 	std::vector<Amaterasu*> amaterasus;
 	std::vector<Fireball*> fireball;
+	std::vector<GoldenAtc*> goldenAtc;
+	std::vector<Rasenshuriken*> rasenshuriken;
 	sf::Text healthText;
 	sf::Font font;
 	sf::RectangleShape boundingRectangle;
@@ -42,6 +46,14 @@ private:
 	//fireball
 	float fireballMaxFireRate;
 	float fireballFireRateTimer; 
+
+	//golden atcker 
+	float goldenAtclMaxFireRate; 
+	float goldenAtcFireRateTimer; 
+
+	//rasenshuriken 
+	float rasenshurikenlMaxFireRate;
+	float rasenshurikenFireRateTimer;
 
 	//skeleton
 	float skeletonMaxDamadgeRate;
