@@ -5,9 +5,12 @@
 
 
 Player::Player() :
-    playerSpeed(0.2f), hp(100),
+    playerSpeed(0.5f), hp(100),
     bulletMaxFireRate(100.0f), bulletFireRateTimer(0),
-    skeletonMaxDamadgeRate(1000.0f), skeletonDamageRate(0)
+    skeletonMaxDamadgeRate(1000.0f), skeletonDamageRate(0),
+    rasengunMaxFireRate(3000.0f), rasengunFireRateTimer(0),
+    amaterasuMaxFireRate(3000.0f), amaterasuFireRateTimer(0)
+
 {
 }
 
@@ -54,24 +57,24 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
 {
 
     //Moving up
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sprite.getPosition().y > 0) {
         //take current position of image
         sf::Vector2f position = sprite.getPosition();
         //add pixels to coordinate to move it
         sprite.setPosition(position + sf::Vector2f(0, -1) * playerSpeed * (float)deltaTime);
     }
     //Moving down
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sprite.getPosition().y + size.y * sprite.getScale().y < 1080) {
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(0, 1) * playerSpeed * (float)deltaTime);
     }
     //Moving left
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) && sprite.getPosition().x > 0) {
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(-1, 0) * playerSpeed * (float)deltaTime);
     }
     //Moving right
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sprite.getPosition().x + size.x * sprite.getScale().x < 1920) {
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(1, 0) * playerSpeed * (float)deltaTime);
     }
@@ -90,6 +93,39 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
         bullets[i]->Update(deltaTime);
         
     }
+    //--------------------------BULLET--------------------------
+    //--------------------------RASENGUN------------------------
+    rasengunFireRateTimer += deltaTime;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) && rasengunMaxFireRate <= rasengunFireRateTimer)
+    {
+        rasenguns.push_back(new Rasengun());
+        int i = rasenguns.size() - 1;
+        rasenguns[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        rasenguns[i]->Load();
+        rasengunFireRateTimer = 0;
+    }
+    for (size_t i = 0; i < rasenguns.size(); ++i)
+    {
+        rasenguns[i]->Update(deltaTime);
+
+    }
+    //--------------------------RASENGUN------------------------
+    //--------------------------AMATERASU------------------------
+    amaterasuFireRateTimer += deltaTime;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) && amaterasuMaxFireRate <= amaterasuFireRateTimer)
+    {
+        amaterasus.push_back(new Amaterasu());
+        int i = amaterasus.size() - 1;
+        amaterasus[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        amaterasus[i]->Load();
+        amaterasuFireRateTimer = 0;
+    }
+    for (size_t i = 0; i < amaterasus.size(); i++)
+    {
+        amaterasus[i]->Update(deltaTime);
+    }
+    //--------------------------AMATERASU------------------------
+    //--------------------------HEALTH--------------------------
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
     boundingRectangle.setPosition(sprite.getPosition());
@@ -97,9 +133,9 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
 
 void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
 {
+    //--------------------------BULLET--------------------------
     for (size_t i = 0; i < bullets.size(); ++i)
     {
-        //bullets[i]->Update(deltaTime);
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds())) 
             {
@@ -110,6 +146,32 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         }
     }
     //--------------------------BULLET--------------------------
+    //--------------------------RASENGUN------------------------
+    for (size_t i = 0; i < rasenguns.size(); ++i)
+    {
+        if (skeleton->health > 0) {
+            if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
+            {
+                skeleton->ChangeHealth(-50);
+                rasenguns.erase(rasenguns.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------RASENGUN------------------------
+    //--------------------------AMATERASUS----------------------
+    for (size_t i = 0; i < amaterasus.size(); ++i)
+    {
+        if (skeleton->health > 0) {
+            if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
+            {
+                skeleton->ChangeHealth(-50);
+                amaterasus.erase(amaterasus.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------AMATERASUS----------------------
     //--------------------------SKELETON------------------------
     boundingRectangle.setPosition(sprite.getPosition());
     skeletonDamageRate += deltaTime;
@@ -163,5 +225,9 @@ void Player::Draw(sf::RenderWindow& window)
     window.draw(healthText);
     for (size_t i = 0; i < bullets.size(); ++i) 
         bullets[i]->Draw(window); 
+    for (size_t i = 0; i < rasenguns.size(); ++i)
+        rasenguns[i]->Draw(window);
+    for (size_t i = 0; i < amaterasus.size(); ++i)
+        amaterasus[i]->Draw(window);
 
 }

@@ -5,6 +5,8 @@
 #include "Boss_1.h"
 #include "Boss_2.h"
 
+#include "Rasengun.h"
+#include "Amaterasu.h"
 class Player
 {
 private:
@@ -12,7 +14,8 @@ private:
 	sf::Texture texture;
 
 	std::vector<Bullet*> bullets; 
-
+	std::vector<Rasengun*> rasenguns;
+	std::vector<Amaterasu*> amaterasus;
 	sf::Text healthText;
 	sf::Font font;
 	sf::RectangleShape boundingRectangle;
@@ -24,6 +27,13 @@ private:
 	float bulletMaxFireRate;
 	float bulletFireRateTimer;
 
+	//rasengun
+	float rasengunMaxFireRate;
+	float rasengunFireRateTimer; 
+
+	//amaterasu
+	float amaterasuMaxFireRate;
+	float amaterasuFireRateTimer;
 
 	//skeleton
 	float skeletonMaxDamadgeRate;
