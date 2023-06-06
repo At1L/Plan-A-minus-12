@@ -100,23 +100,23 @@ int main()
             }
         }
 
-        if (skeletons.size() == 0)
+        if (skeletons.size() == 0) 
         {
-            skeletons.clear();
-            for (int i = 0; i < 4; i++)
+            skeletons.clear();  
+            for (int i = 0; i < 4; i++) 
             {
-                skeletons.push_back(new Skeleton(100, 0.1f));
-                skeletons[i]->Initialize();
+                skeletons.push_back(new Skeleton(100, 0.1f));  
+                skeletons[i]->Initialize();  
             }
-            for (int i = 0; i < skeletons.size(); i++)
-            {
-                float X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980;
-                std::cout << X << ' ' << Y << '\n';
-                while (abs(X - 100) < 100 && abs(Y - 100) < 100)
+            for (int i = 0; i < skeletons.size(); i++) 
+            { 
+                float X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980; 
+                std::cout << X << ' ' << Y << '\n'; 
+                while (abs(X - 100) < 100 && abs(Y - 100) < 100) 
                 {
-                    X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980;
+                    X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980; 
                 }
-                skeletons[i]->Load(X, Y);
+                skeletons[i]->Load(X, Y); 
             }
         }
 
