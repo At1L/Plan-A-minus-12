@@ -50,7 +50,7 @@ void Player::Load()
         std::cout << "ERROR\n";
 }
 
-void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePosition)
+void Player::Update(double deltaTime, Skeleton*& skeleton, sf::Vector2f& mousePosition)
 {
 
     //Moving up
@@ -88,10 +88,10 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
     for (size_t i = 0; i < bullets.size(); ++i)
     {
         bullets[i]->Update(deltaTime);
-        if (skeleton.health > 0) {
-            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), skeleton.sprite.getGlobalBounds())) 
+        if (skeleton->health > 0) {
+            if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds())) 
             {
-                skeleton.ChangeHealth(-10); 
+                skeleton->ChangeHealth(-10); 
                 bullets.erase(bullets.begin() + i); 
                 std::cout << "Collision" << "\n";
             }
@@ -101,7 +101,7 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
     //--------------------------SKELETON------------------------
     boundingRectangle.setPosition(sprite.getPosition());
     skeletonDamageRate += deltaTime;
-    if (Math::DidRectCollide(skeleton.sprite.getGlobalBounds(), this->sprite.getGlobalBounds()) && skeletonDamageRate >= skeletonMaxDamadgeRate)
+    if (Math::DidRectCollide(skeleton->sprite.getGlobalBounds(), this->sprite.getGlobalBounds()) && skeletonDamageRate >= skeletonMaxDamadgeRate)
     {
         hp--;
         skeletonDamageRate = 0;

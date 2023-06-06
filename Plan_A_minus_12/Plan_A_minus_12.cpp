@@ -19,12 +19,11 @@ int main()
     FrameRate frameRate;
     Map map;
 
-    std::vector<Skeleton> skeletons;
+    std::vector<Skeleton*>skeletons;
     Player player;
     for (int i = 0; i < 4; i++)
     {
-        Skeleton skeleton(100, 0.1f);
-        skeletons.push_back(skeleton);
+        skeletons.push_back(new Skeleton(100, 0.1f));
     }
     MapLoader mapLoader;
     //--------------INITIALIZE---------------
@@ -33,7 +32,7 @@ int main()
     for (int i = 0; i < 4; i++)
     {
         
-        skeletons[i].Initialize();
+        skeletons[i]->Initialize();
     }
     player.Initialize();  
     //--------------INITIALIZE---------------
@@ -52,7 +51,7 @@ int main()
         {
             X = (rand() * rand() + rand() + 200) % 1820, Y = (rand() * rand() + rand() + 200) % 980;
         }
-        skeletons[i].Load(X, Y);
+        skeletons[i]->Load(X, Y);
     }
    
     player.Load();
@@ -78,10 +77,13 @@ int main()
         map.Update(deltaTime);
         for (int i = 0; i < skeletons.size(); i++)
         {
-            skeletons[i].Update(player.sprite.getPosition(), deltaTime);
+            skeletons[i]->Update(player.sprite.getPosition(), deltaTime);
             player.Update(deltaTime, skeletons[i], mousePosition);
+            if (skeletons[i]->health <= 0)
+            {
+                skeletons.erase(skeletons.begin() + i);
+            }
         }
-        
         
         //--------------Update---------------
         
@@ -90,7 +92,11 @@ int main()
         map.Draw(window);
         for (int i = 0; i < skeletons.size(); i++)
         {
-            skeletons[i].Draw(window);
+            if (skeletons[i]->health > 0)
+            {
+                skeletons[i]->Draw(window);
+            }
+            
         }
         player.Draw(window);
         frameRate.Draw(window); 

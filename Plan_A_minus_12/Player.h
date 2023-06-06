@@ -34,7 +34,7 @@ public:
 	~Player();
 	void Initialize(); 
 	void Load();
-	void Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePosition);
+	void Update(double deltaTime, Skeleton*& skeleton, sf::Vector2f& mousePosition);
 	void Draw(sf::RenderWindow& window);
 };
 
