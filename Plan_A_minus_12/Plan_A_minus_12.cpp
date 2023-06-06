@@ -14,10 +14,27 @@ int main()
     settings.antialiasingLevel = 8;
     //create window                      width, height, window header
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "Dungeon master: Deep Dark Fantasy", sf::Style::Default, settings);
-    window.setFramerateLimit(120);
+    window.setFramerateLimit(60);
     //--------------INITIALIZE---------------
     FrameRate frameRate;
-    Map map;
+    sf::Texture dota;
+    sf::Sprite dotaMap;
+    dota.loadFromFile("Assets/image.png");
+    dotaMap.setTexture(dota);
+    dotaMap.setScale(sf::Vector2f(1.3f, 1.3f));
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     std::vector<Skeleton*>skeletons;
     Player player;
@@ -28,7 +45,6 @@ int main()
     MapLoader mapLoader;
     //--------------INITIALIZE---------------
     frameRate.Initialize();
-    map.Initialize();
     for (int i = 0; i < 4; i++)
     {
         
@@ -40,7 +56,6 @@ int main()
 
     //--------------LOAD---------------
     frameRate.Load();
-    map.Load("assets/maps/level1.rmap");
    
     srand(time(0));
     for (int i = 0; i < skeletons.size(); i++)
@@ -74,7 +89,6 @@ int main()
         sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window)); 
 
         frameRate.Update(deltaTime);
-        map.Update(deltaTime);
         player.Update(deltaTime, mousePosition);
         for (int i = 0; i < skeletons.size(); i++)
         {
@@ -90,7 +104,7 @@ int main()
         
         //--------------Draw---------------
         window.clear(sf::Color::Black);  
-        map.Draw(window);
+        window.draw(dotaMap);
         for (int i = 0; i < skeletons.size(); i++)
         {
             if (skeletons[i]->health > 0)
@@ -103,7 +117,6 @@ int main()
         frameRate.Draw(window); 
         window.display();  
         //--------------Draw---------------
-        
     }
     return 0;
 }
