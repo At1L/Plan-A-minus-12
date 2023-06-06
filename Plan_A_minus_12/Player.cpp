@@ -5,8 +5,8 @@
 
 
 Player::Player() :
-    playerSpeed(0.5f),
-    maxFireRate(250.0f), fireRateTimer(0), hp(100)
+    playerSpeed(0.2f), hp(100),
+    bulletMaxFireRate(1000.0f), bulletFireRateTimer(0)
 {
 }
 
@@ -16,8 +16,8 @@ Player::~Player()
 
 void Player::Initialize()
 {
-    boundingRectangle.setFillColor(sf::Color::Transparent);
-    boundingRectangle.setOutlineColor(sf::Color::Red);
+    boundingRectangle.setFillColor(sf::Color::Transparent); 
+    boundingRectangle.setOutlineColor(sf::Color::Red); 
     boundingRectangle.setOutlineThickness(1);
     hp = 100;
     size = sf::Vector2i(24, 32);  
@@ -75,14 +75,14 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
         sprite.setPosition(position + sf::Vector2f(1, 0) * playerSpeed * (float)deltaTime);
     }
     //--------------------------BULLET--------------------------
-    fireRateTimer += deltaTime;
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && fireRateTimer >= maxFireRate)
+    bulletFireRateTimer += deltaTime;
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && bulletFireRateTimer >= bulletMaxFireRate)
     {
         bullets.push_back(Bullet());
         int i = bullets.size() - 1;
         bullets[i].Initialize(sprite.getPosition(), mousePosition, 0.5f);
         bullets[i].Load();
-        fireRateTimer = 0;
+        bulletFireRateTimer = 0;
     }
     for (size_t i = 0; i < bullets.size(); ++i)
     {
@@ -96,18 +96,17 @@ void Player::Update(double deltaTime, Skeleton& skeleton, sf::Vector2f& mousePos
             }
         }
     }
-    
-
     //--------------------------BULLET--------------------------
+    //--------------------------SKELETON------------------------
     boundingRectangle.setPosition(sprite.getPosition());
-    if (abs(skeleton.sprite.getPosition().x - sprite.getPosition().x) < 5
-        && abs(skeleton.sprite.getPosition().y - sprite.getPosition().y) < 5)
+    if (Math::DidRectCollide(skeleton.sprite.getGlobalBounds(), this->sprite.getGlobalBounds()))
     {
         hp--;
-  
+        std::cout << "Collision" << "\n";
     }
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
+    //--------------------------SKELETON------------------------
 }
 
 void Player::Draw(sf::RenderWindow& window)
@@ -117,5 +116,4 @@ void Player::Draw(sf::RenderWindow& window)
     window.draw(healthText);
     for (size_t i = 0; i < bullets.size(); ++i) 
         bullets[i].Draw(window); 
-
 }
