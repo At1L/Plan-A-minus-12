@@ -5,21 +5,28 @@
 class Player
 {
 private:
+	//player
 	sf::Texture texture;
 
 	std::vector<Bullet*> bullets; 
 
 	sf::Text healthText;
 	sf::Font font;
+	sf::RectangleShape boundingRectangle;
+	sf::Vector2i size;
+	float playerSpeed;
+	int hp;
 
+	//shuriken
 	float bulletMaxFireRate;
 	float bulletFireRateTimer;
 	float playerSpeed;
 	int hp;
 
 
-	sf::RectangleShape boundingRectangle;
-	sf::Vector2i size; 
+	//skeleton
+	float skeletonMaxDamadgeRate;
+	float skeletonDamageRate;
 
 public:
 	sf::Sprite sprite; 
