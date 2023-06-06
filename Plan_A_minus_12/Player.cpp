@@ -64,7 +64,7 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
         sprite.setPosition(position + sf::Vector2f(0, -1) * playerSpeed * (float)deltaTime);
     }
     //Moving down
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sprite.getPosition().y + 32 * 2 < 1080) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) && sprite.getPosition().y + size.y * sprite.getScale().y < 1080) {
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(0, 1) * playerSpeed * (float)deltaTime);
     }
@@ -74,7 +74,7 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
         sprite.setPosition(position + sf::Vector2f(-1, 0) * playerSpeed * (float)deltaTime);
     }
     //Moving right
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sprite.getPosition().x + 24 * 2 < 1920) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) && sprite.getPosition().x + size.x * sprite.getScale().x < 1920) {
         sf::Vector2f position = sprite.getPosition();
         sprite.setPosition(position + sf::Vector2f(1, 0) * playerSpeed * (float)deltaTime);
     }
