@@ -28,8 +28,14 @@ private:
 	sf::Vector2i size;
 	float playerSpeed;
 	int hp;
-
-	//fireball
+	int maxHP;
+	int chakra;
+	float healTimer;
+	float plusChacraTimer;
+	int maxChakra;
+	int playerLVL;
+	int buffLVL;
+	int toLVLup;
 
 	//shuriken
 	float bulletMaxFireRate;

@@ -5,7 +5,9 @@
 
 
 Player::Player() :
-    playerSpeed(0.5f), hp(100),
+    playerSpeed(0.5f), hp(100), chakra(100), maxHP(100), maxChakra(100),
+    healTimer(0), plusChacraTimer(0),
+    playerLVL(0), buffLVL(0), toLVLup(25),
     bulletMaxFireRate(100.0f), bulletFireRateTimer(0),
     skeletonMaxDamadgeRate(1000.0f), skeletonDamageRate(0),
     boss1MaxDamadgeRate(1000.0f), boss1DamageRate(0),
@@ -27,7 +29,6 @@ void Player::Initialize()
     boundingRectangle.setFillColor(sf::Color::Transparent); 
     boundingRectangle.setOutlineColor(sf::Color::Red); 
     boundingRectangle.setOutlineThickness(1);
-    hp = 100;
     size = sf::Vector2i(24, 32);  
 }
 
@@ -59,7 +60,31 @@ void Player::Load()
 
 void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
 {
+    healTimer += deltaTime;
+    if (healTimer >= 1000.0f && hp < maxHP)
+    {
+        hp++;
+        healTimer = 0;
+    }
+    plusChacraTimer += deltaTime;
+    if (plusChacraTimer >= 1000.0f && chakra < maxChakra)
+    {
+        chakra++;
+        plusChacraTimer = 0;
+    }
 
+
+    if (buffLVL >= toLVLup)
+    {
+        playerLVL++;
+        toLVLup += 25;
+        buffLVL = 0;
+        //20 это пока наша константа
+        hp = maxHP + 20 * playerLVL;
+        chakra = maxChakra + 20 * playerLVL;
+        maxHP = maxHP + 20 * playerLVL;
+        maxChakra = maxChakra + 20 * playerLVL;
+    }
     //Moving up
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) && sprite.getPosition().y > 0) {
         //take current position of image
@@ -188,7 +213,7 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds())) 
             {
-                skeleton->ChangeHealth(-100); 
+                skeleton->ChangeHealth(-(100 + 20 * playerLVL)); 
                 bullets.erase(bullets.begin() + i); 
                 //std::cout << "Collision" << "\n";
             }
@@ -201,7 +226,7 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
             {
-                skeleton->ChangeHealth(-50);
+                skeleton->ChangeHealth(-(100 + 20 * playerLVL));
                 rasenguns.erase(rasenguns.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -214,7 +239,7 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
             {
-                skeleton->ChangeHealth(-50);
+                skeleton->ChangeHealth(-(100 + 20 * playerLVL));
                 amaterasus.erase(amaterasus.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -227,7 +252,7 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
             {
-                skeleton->ChangeHealth(-50);
+                skeleton->ChangeHealth(-(100 + 20 * playerLVL));
                 fireball.erase(fireball.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -240,7 +265,7 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(goldenAtc[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
             {
-                skeleton->ChangeHealth(-50);
+                skeleton->ChangeHealth(-(100 + 20 * playerLVL));
                 goldenAtc.erase(goldenAtc.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -253,7 +278,7 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(rasenshuriken[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
             {
-                skeleton->ChangeHealth(-50);
+                skeleton->ChangeHealth(-(100 + 20 * playerLVL));
                 rasenshuriken.erase(rasenshuriken.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -283,7 +308,7 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
         if (boss_1->health > 0) {
             if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1->ChangeHealth(-100);
+                boss_1->ChangeHealth(-(100 + 20 * playerLVL));
                 bullets.erase(bullets.begin() + i);
                 //std::cout << "Collision" << "\n";
             }
@@ -296,7 +321,7 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
         if (boss_1->health > 0) {
             if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1->ChangeHealth(-50);
+                boss_1->ChangeHealth(-(100 + 20 * playerLVL));
                 rasenguns.erase(rasenguns.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -309,7 +334,7 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
         if (boss_1->health > 0) {
             if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1->ChangeHealth(-50);
+                boss_1->ChangeHealth(-(100 + 20 * playerLVL));
                 amaterasus.erase(amaterasus.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -334,7 +359,7 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
         if (boss_1->health > 0) {
             if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1->ChangeHealth(-50);
+                boss_1->ChangeHealth(-(100 + 20 * playerLVL));
                 fireball.erase(fireball.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -347,7 +372,7 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
         if (boss_1->health > 0) { 
             if (Math::DidRectCollide(goldenAtc[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds())) 
             { 
-                boss_1->ChangeHealth(-50); 
+                boss_1->ChangeHealth(-(100 + 20 * playerLVL));
                 goldenAtc.erase(goldenAtc.begin() + i); 
                 std::cout << "Collision" << "\n"; 
             }
@@ -360,7 +385,7 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
         if (boss_1->health > 0) {
             if (Math::DidRectCollide(rasenshuriken[i]->GetGlobalBounds(), boss_1->sprite.getGlobalBounds()))
             {
-                boss_1->ChangeHealth(-50);
+                boss_1->ChangeHealth(-(100 + 20 * playerLVL));
                 rasenshuriken.erase(rasenshuriken.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -377,7 +402,7 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
         if (boss_2->health > 0) {
             if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2->ChangeHealth(-100);
+                boss_2->ChangeHealth(-(100 + 20 * playerLVL));
                 bullets.erase(bullets.begin() + i);
                 //std::cout << "Collision" << "\n";
             }
@@ -389,7 +414,7 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
         if (boss_2->health > 0) {
             if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2->ChangeHealth(-50);
+                boss_2->ChangeHealth(-(100 + 20 * playerLVL));
                 rasenguns.erase(rasenguns.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -402,7 +427,7 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
         if (boss_2->health > 0) {
             if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2->ChangeHealth(-50);
+                boss_2->ChangeHealth(-(100 + 20 * playerLVL));
                 amaterasus.erase(amaterasus.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -415,7 +440,7 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
         if (boss_2->health > 0) {
             if (Math::DidRectCollide(fireball[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2->ChangeHealth(-50);
+                boss_2->ChangeHealth(-(100 + 20 * playerLVL));
                 fireball.erase(fireball.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -439,7 +464,7 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
         if (boss_2->health > 0) {
             if (Math::DidRectCollide(goldenAtc[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2->ChangeHealth(-50);
+                boss_2->ChangeHealth(-(100 + 20 * playerLVL));
                 goldenAtc.erase(goldenAtc.begin() + i);
                 std::cout << "Collision" << "\n";
             }
@@ -452,7 +477,7 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
         if (boss_2->health > 0) {
             if (Math::DidRectCollide(rasenshuriken[i]->GetGlobalBounds(), boss_2->sprite.getGlobalBounds()))
             {
-                boss_2->ChangeHealth(-50);
+                boss_2->ChangeHealth(-(100 + 20 * playerLVL));
                 rasenshuriken.erase(rasenshuriken.begin() + i);
                 std::cout << "Collision" << "\n";
             }
