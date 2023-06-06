@@ -7,6 +7,9 @@
     <Filter Include="assets">
       <UniqueIdentifier>{85fad0ce-ae84-4d00-98cf-d70cdccfdc3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\GUI">
+      <UniqueIdentifier>{e8b9b7fe-43f1-4ed2-bd7d-356cc710726e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Grid.cpp">
@@ -21,6 +24,9 @@
     <ClCompile Include="Map.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>src\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Grid.h">
@@ -34,6 +40,9 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>src\GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

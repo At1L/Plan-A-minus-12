@@ -9,11 +9,11 @@ class Map
 {
 private: 
 	const Grid& m_grid;
-	const MouseTile& m_mouseTile;
+	MouseTile& m_mouseTile;
 	sf::Sprite* m_mapSprites;
 	
 public:
-	Map(const Grid& grid, const MouseTile& mouseTile); 
+	Map(const Grid& grid, MouseTile& mouseTile); 
 	~Map();
 
 	void Initialize();
