@@ -99,7 +99,7 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
 {
     for (size_t i = 0; i < bullets.size(); ++i)
     {
-        bullets[i]->Update(deltaTime);
+        //bullets[i]->Update(deltaTime);
         if (skeleton->health > 0) {
             if (Math::DidRectCollide(bullets[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds())) 
             {
