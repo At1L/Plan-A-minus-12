@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Amaterasu.cpp" />
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="FrameRate.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Skeleton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Amaterasu.h" />
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="FrameRate.h" />
     <ClInclude Include="Header.h" />

@@ -8,7 +8,9 @@ Player::Player() :
     playerSpeed(0.5f), hp(100),
     bulletMaxFireRate(100.0f), bulletFireRateTimer(0),
     skeletonMaxDamadgeRate(1000.0f), skeletonDamageRate(0),
-    rasengunMaxFireRate(3000.0f), rasengunFireRateTimer(0)
+    rasengunMaxFireRate(3000.0f), rasengunFireRateTimer(0),
+    amaterasuMaxFireRate(3000.0f), amaterasuFireRateTimer(0)
+
 {
 }
 
@@ -108,6 +110,21 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
 
     }
     //--------------------------RASENGUN------------------------
+    //--------------------------AMATERASU------------------------
+    amaterasuFireRateTimer += deltaTime;
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) && amaterasuMaxFireRate <= amaterasuFireRateTimer)
+    {
+        amaterasus.push_back(new Amaterasu());
+        int i = amaterasus.size() - 1;
+        amaterasus[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
+        amaterasus[i]->Load();
+        amaterasuFireRateTimer = 0;
+    }
+    for (size_t i = 0; i < amaterasus.size(); i++)
+    {
+        amaterasus[i]->Update(deltaTime);
+    }
+    //--------------------------AMATERASU------------------------
     //--------------------------HEALTH--------------------------
     healthText.setString(std::to_string(hp));
     healthText.setPosition(sprite.getPosition());
@@ -142,6 +159,19 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         }
     }
     //--------------------------RASENGUN------------------------
+    //--------------------------AMATERASUS----------------------
+    for (size_t i = 0; i < amaterasus.size(); ++i)
+    {
+        if (skeleton->health > 0) {
+            if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), skeleton->sprite.getGlobalBounds()))
+            {
+                skeleton->ChangeHealth(-50);
+                amaterasus.erase(amaterasus.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------AMATERASUS----------------------
     //--------------------------SKELETON------------------------
     boundingRectangle.setPosition(sprite.getPosition());
     skeletonDamageRate += deltaTime;
@@ -165,5 +195,7 @@ void Player::Draw(sf::RenderWindow& window)
         bullets[i]->Draw(window); 
     for (size_t i = 0; i < rasenguns.size(); ++i)
         rasenguns[i]->Draw(window);
+    for (size_t i = 0; i < amaterasus.size(); ++i)
+        amaterasus[i]->Draw(window);
 
 }

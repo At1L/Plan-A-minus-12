@@ -3,6 +3,7 @@
 #include "Skeleton.h"
 #include "Bullet.h"
 #include "Rasengun.h"
+#include "Amaterasu.h"
 class Player
 {
 private:
@@ -11,7 +12,7 @@ private:
 
 	std::vector<Bullet*> bullets; 
 	std::vector<Rasengun*> rasenguns;
-
+	std::vector<Amaterasu*> amaterasus;
 	sf::Text healthText;
 	sf::Font font;
 	sf::RectangleShape boundingRectangle;
@@ -26,6 +27,10 @@ private:
 	//rasengun
 	float rasengunMaxFireRate;
 	float rasengunFireRateTimer; 
+
+	//amaterasu
+	float amaterasuMaxFireRate;
+	float amaterasuFireRateTimer;
 
 	//skeleton
 	float skeletonMaxDamadgeRate;
