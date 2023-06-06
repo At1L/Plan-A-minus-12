@@ -188,6 +188,7 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
 
 void Player::Update_Boss_1(double deltaTime, Boss_1& boss_1)
 {
+    //--------------------------BULLET--------------------------
     for (size_t i = 0; i < bullets.size(); ++i)
     {
         //bullets[i]->Update(deltaTime);
@@ -200,6 +201,33 @@ void Player::Update_Boss_1(double deltaTime, Boss_1& boss_1)
             }
         }
     }
+    //--------------------------BULLET--------------------------
+    //--------------------------RASENGUN------------------------
+    for (size_t i = 0; i < rasenguns.size(); ++i)
+    {
+        if (boss_1.health > 0) {
+            if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), boss_1.sprite.getGlobalBounds()))
+            {
+                boss_1.ChangeHealth(-50);
+                rasenguns.erase(rasenguns.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------RASENGUN------------------------
+    //--------------------------AMATERASUS----------------------
+    for (size_t i = 0; i < amaterasus.size(); ++i)
+    {
+        if (boss_1.health > 0) {
+            if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), boss_1.sprite.getGlobalBounds()))
+            {
+                boss_1.ChangeHealth(-50);
+                amaterasus.erase(amaterasus.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------AMATERASUS----------------------
 }
 
 void Player::Update_Boss_2(double deltaTime, Boss_2& boss_2)
@@ -216,6 +244,32 @@ void Player::Update_Boss_2(double deltaTime, Boss_2& boss_2)
             }
         }
     }
+    //--------------------------RASENGUN------------------------
+    for (size_t i = 0; i < rasenguns.size(); ++i)
+    {
+        if (boss_2.health > 0) {
+            if (Math::DidRectCollide(rasenguns[i]->GetGlobalBounds(), boss_2.sprite.getGlobalBounds()))
+            {
+                boss_2.ChangeHealth(-50);
+                rasenguns.erase(rasenguns.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------RASENGUN------------------------
+    //--------------------------AMATERASUS----------------------
+    for (size_t i = 0; i < amaterasus.size(); ++i)
+    {
+        if (boss_2.health > 0) {
+            if (Math::DidRectCollide(amaterasus[i]->GetGlobalBounds(), boss_2.sprite.getGlobalBounds()))
+            {
+                boss_2.ChangeHealth(-50);
+                amaterasus.erase(amaterasus.begin() + i);
+                std::cout << "Collision" << "\n";
+            }
+        }
+    }
+    //--------------------------AMATERASUS----------------------
 }
 
 void Player::Draw(sf::RenderWindow& window)
