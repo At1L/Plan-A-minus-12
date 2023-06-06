@@ -30,8 +30,6 @@ void Skeleton::Initialize()
 
 void Skeleton::Load(float X, float Y)
 {
-    //std::cout << X << ' ' << Y << '\n';
-    health = 100;
     if (font.loadFromFile("Assets/Fonts/arial.ttf")) {
         std::cout << "Font loaded\n";
         healthText.setFont(font);
