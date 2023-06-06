@@ -13,7 +13,7 @@ void Amaterasu::Initialize(const sf::Vector2f& position, const sf::Vector2f& tar
 	speed = BulletSpeed;
 	sprite.setPosition(position);
 	direction = Math::NormalaizeVector(target - position);
-	size = sf::Vector2i(34, 34);
+	size = sf::Vector2i(58, 58);
 }
 
 void Amaterasu::Load()
