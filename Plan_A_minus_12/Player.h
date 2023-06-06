@@ -23,6 +23,7 @@ private:
 	std::vector<GoldenAtc*> goldenAtc;
 	std::vector<Rasenshuriken*> rasenshuriken;
 	sf::Text healthText;
+	sf::Text chakraText;
 	sf::Font font;
 	sf::RectangleShape boundingRectangle;
 	sf::Vector2i size;

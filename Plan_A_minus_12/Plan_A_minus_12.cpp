@@ -27,15 +27,6 @@ int main()
 
 
 
-
-
-
-
-
-
-
-
-
     int wave = 0;
     int skeletons_num = 4;
     int skeleton_hp = 100;

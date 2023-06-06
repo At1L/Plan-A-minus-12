@@ -43,6 +43,9 @@ void Player::Load()
             std::cout << "Font loaded\n";
             healthText.setFont(font);
             healthText.setString(std::to_string(hp));
+
+            chakraText.setFont(font);
+            chakraText.setString(std::to_string(chakra));
         }
         
         int XIndex = 4;
@@ -125,13 +128,16 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
     //--------------------------BULLET--------------------------
     //--------------------------RASENGUN------------------------
     rasengunFireRateTimer += deltaTime;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) && rasengunMaxFireRate <= rasengunFireRateTimer)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2) && rasengunMaxFireRate <= rasengunFireRateTimer
+        && chakra >= 15)
     {
         rasenguns.push_back(new Rasengun());
         int i = rasenguns.size() - 1;
         rasenguns[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
         rasenguns[i]->Load();
         rasengunFireRateTimer = 0;
+
+        chakra -= 15;
     }
     for (size_t i = 0; i < rasenguns.size(); ++i)
     {
@@ -141,13 +147,16 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
     //--------------------------RASENGUN------------------------
     //--------------------------AMATERASU------------------------
     amaterasuFireRateTimer += deltaTime;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) && amaterasuMaxFireRate <= amaterasuFireRateTimer)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num5) && amaterasuMaxFireRate <= amaterasuFireRateTimer
+        && chakra >= 30)
     {
         amaterasus.push_back(new Amaterasu());
         int i = amaterasus.size() - 1;
         amaterasus[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
         amaterasus[i]->Load();
         amaterasuFireRateTimer = 0;
+
+        chakra -= 30;
     }
     for (size_t i = 0; i < amaterasus.size(); i++)
     {
@@ -156,13 +165,16 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
     //--------------------------AMATERASU------------------------
     //--------------------------FIREBALL------------------------
     fireballFireRateTimer += deltaTime;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) && fireballMaxFireRate <= fireballFireRateTimer)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1) && fireballMaxFireRate <= fireballFireRateTimer
+        && chakra >= 10)
     {
         fireball.push_back(new Fireball());
         int i = fireball.size() - 1;
         fireball[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
         fireball[i]->Load();
         fireballFireRateTimer = 0;
+
+        chakra -= 10;
     }
     for (size_t i = 0; i < fireball.size(); i++)
     {
@@ -171,13 +183,16 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
     //--------------------------FIREBALL------------------------
     //--------------------------GOLDEN--------------------------
     goldenAtcFireRateTimer += deltaTime;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) && goldenAtclMaxFireRate <= goldenAtcFireRateTimer)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num4) && goldenAtclMaxFireRate <= goldenAtcFireRateTimer
+        && chakra >= 25)
     {
         goldenAtc.push_back(new GoldenAtc());
         int i = goldenAtc.size() - 1;
         goldenAtc[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
         goldenAtc[i]->Load();
         goldenAtcFireRateTimer = 0;
+
+        chakra -= 25;
     }
     for (size_t i = 0; i < goldenAtc.size(); i++)
     {
@@ -186,13 +201,16 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
     //--------------------------GOLDEN--------------------------
     //--------------------------rasenshuriken--------------------------
     rasenshurikenFireRateTimer += deltaTime;
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) && rasenshurikenlMaxFireRate <= rasenshurikenFireRateTimer)
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3) && rasenshurikenlMaxFireRate <= rasenshurikenFireRateTimer
+        && chakra >= 20)
     {
         rasenshuriken.push_back(new Rasenshuriken());
         int i = rasenshuriken.size() - 1;
         rasenshuriken[i]->Initialize(sprite.getPosition(), mousePosition, 0.5f);
         rasenshuriken[i]->Load();
         rasenshurikenFireRateTimer = 0;
+
+        chakra -= 20;
     }
     for (size_t i = 0; i < rasenshuriken.size(); i++)
     {
@@ -200,8 +218,13 @@ void Player::Update(double deltaTime, sf::Vector2f& mousePosition)
     }
     //--------------------------rasenshuriken--------------------------
     //--------------------------HEALTH--------------------------
-    healthText.setString(std::to_string(hp));
-    healthText.setPosition(sprite.getPosition());
+    healthText.setString("HP: " + std::to_string(hp) + "/" + std::to_string(maxHP));
+    //healthText.setPosition(sprite.getPosition());
+    healthText.setPosition(1, 50);
+
+    chakraText.setString("Chakra: " + std::to_string(chakra) + "/" + std::to_string(maxChakra));
+    chakraText.setPosition(1, 100);
+
     boundingRectangle.setPosition(sprite.getPosition());
 }
 
@@ -294,8 +317,8 @@ void Player::UpdateSkeleton(double deltaTime, Skeleton*& skeleton)
         skeletonDamageRate = 0;
         //std::cout << "Collision" << "\n";
     }
-    healthText.setString(std::to_string(hp));
-    healthText.setPosition(sprite.getPosition());
+    //healthText.setString("HP: " + std::to_string(hp) + "/100");
+    //healthText.setPosition(sprite.getPosition());
     //--------------------------SKELETON------------------------
 }
 
@@ -350,8 +373,8 @@ void Player::Update_Boss_1(double deltaTime, Boss_1*& boss_1)
         boss1DamageRate = 0;
         //std::cout << "Collision" << "\n";
     }
-    healthText.setString(std::to_string(hp));
-    healthText.setPosition(sprite.getPosition());
+    //healthText.setString(std::to_string(hp) + "/100");
+    //healthText.setPosition(sprite.getPosition());
     //--------------------------BOSS1---------------------------
     //--------------------------FIREBALL----------------------
     for (size_t i = 0; i < fireball.size(); ++i)
@@ -455,8 +478,8 @@ void Player::Update_Boss_2(double deltaTime, Boss_2*& boss_2)
         boss2DamageRate = 0;
         //std::cout << "Collision" << "\n";
     }
-    healthText.setString(std::to_string(hp));
-    healthText.setPosition(sprite.getPosition());
+    //healthText.setString(std::to_string(hp) + "/100");
+    //healthText.setPosition(sprite.getPosition());
     //--------------------------BOSS2---------------------------
     //--------------------------GOLDEN----------------------
     for (size_t i = 0; i < goldenAtc.size(); ++i)
@@ -491,6 +514,8 @@ void Player::Draw(sf::RenderWindow& window)
     window.draw(sprite); 
     window.draw(boundingRectangle);
     window.draw(healthText);
+    window.draw(chakraText);
+
     for (size_t i = 0; i < bullets.size(); ++i) 
         bullets[i]->Draw(window); 
     for (size_t i = 0; i < rasenguns.size(); ++i)
