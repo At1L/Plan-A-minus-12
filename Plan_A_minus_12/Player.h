@@ -24,6 +24,7 @@ private:
 	std::vector<Rasenshuriken*> rasenshuriken;
 	sf::Text healthText;
 	sf::Text chakraText;
+	sf::Text lvlText;
 	sf::Font font;
 	sf::RectangleShape boundingRectangle;
 	sf::Vector2i size;
@@ -87,5 +88,9 @@ public:
 	void Update_Boss_1(double deltaTime, Boss_1*& boss_1);
 	void Update_Boss_2(double deltaTime, Boss_2*& boss_2);
 	void Draw(sf::RenderWindow& window);
+
+	void SetBufLvl(int buf);
+
+	int GetHp();
 };
 

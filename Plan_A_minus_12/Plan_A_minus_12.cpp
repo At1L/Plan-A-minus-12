@@ -33,15 +33,17 @@ int main()
 
     std::vector<Skeleton*>skeletons;
 
-    Boss_1* boss_1 = new Boss_1(1000, 0.1f);
+    Boss_1* boss_1 = new Boss_1(3000, 0.3f);
 
-    Boss_2* boss_2 = new Boss_2(1000, 0.1f);
+    Boss_2* boss_2 = new Boss_2(7000, 0.35f);
 
     Player player;
 
+    float SpeedOfSkelet= 0.3f;
+
     for (int i = 0; i < 4; i++)
     {
-        skeletons.push_back(new Skeleton(skeleton_hp, 0.1f));
+        skeletons.push_back(new Skeleton(skeleton_hp, SpeedOfSkelet));
     }
     
     MapLoader mapLoader;
@@ -76,6 +78,9 @@ int main()
     sf::Clock clock;
     while(window.isOpen()) 
     {
+        if (player.GetHp() <= 0) {
+            exit(0);
+        }
         sf::Time deltaTimer = clock.restart();
         double deltaTime = deltaTimer.asMicroseconds()/1000.0;
         
@@ -92,12 +97,15 @@ int main()
 
         frameRate.Update(deltaTime);
         player.Update(deltaTime, mousePosition);
+
         for (int i = 0; i < skeletons.size(); i++)
         {
             skeletons[i]->Update(player.sprite.getPosition(), deltaTime);
             player.UpdateSkeleton(deltaTime, skeletons[i]);
+
             if (skeletons[i]->health <= 0)
             {
+                player.SetBufLvl(4);
                 skeletons.erase(skeletons.begin() + i);
             }
         }
@@ -109,7 +117,7 @@ int main()
             skeleton_hp += 25;
             for (int i = 0; i < skeletons_num; i++) 
             {
-                skeletons.push_back(new Skeleton(skeleton_hp, 0.1f));  
+                skeletons.push_back(new Skeleton(skeleton_hp, SpeedOfSkelet));  
                 skeletons[i]->Initialize();  
             }
             for (int i = 0; i < skeletons.size(); i++) 
@@ -144,6 +152,7 @@ int main()
         if(boss_1->health <= 0 && wave == 4)
         {
             wave++;
+            player.SetBufLvl(30);
             boss_1->~Boss_1();
         }
 
@@ -154,7 +163,7 @@ int main()
             skeleton_hp += 25;
             for (int i = 0; i < skeletons_num; i++)
             {
-                skeletons.push_back(new Skeleton(skeleton_hp, 0.1f));
+                skeletons.push_back(new Skeleton(skeleton_hp, SpeedOfSkelet));
                 skeletons[i]->Initialize();
             }
             for (int i = 0; i < skeletons.size(); i++)
@@ -184,9 +193,10 @@ int main()
             player.Update_Boss_2(deltaTime, boss_2);
         }
 
-        if (boss_2->health <= 0 && wave ==10)
+        if (boss_2->health <= 0 && wave == 10)
         {
             boss_2->~Boss_2();
+            player.SetBufLvl(50);
             wave++;
         }
 

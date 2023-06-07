@@ -18,9 +18,9 @@ void Boss_1::ChangeHealth(int damage)
 
 void Boss_1::Initialize()
 {
-	boundingRectangle.setFillColor(sf::Color::Transparent);
-	boundingRectangle.setOutlineColor(sf::Color::Blue);
-	boundingRectangle.setOutlineThickness(1);
+	//boundingRectangle.setFillColor(sf::Color::Transparent);
+	//boundingRectangle.setOutlineColor(sf::Color::Blue);
+	//boundingRectangle.setOutlineThickness(1);
 
 	size = sf::Vector2i(38, 78);
 }
@@ -47,7 +47,7 @@ void Boss_1::Load(float X, float Y)
         sprite.setTextureRect(sf::IntRect(XIndex * size.x, YIndex * size.y, size.x, size.y));*/
         sprite.scale(sf::Vector2f(10, 1));
 
-        boundingRectangle.setSize(sf::Vector2f(size.x * sprite.getScale().x, size.y * sprite.getScale().y));
+        //boundingRectangle.setSize(sf::Vector2f(size.x * sprite.getScale().x, size.y * sprite.getScale().y));
     }
 }
 
@@ -56,7 +56,7 @@ void Boss_1::Update(const sf::Vector2f& target, double deltaTime)
     if (health > 0) {
         direction = Math::NormalaizeVector(target - sprite.getPosition());
         sprite.setPosition(sprite.getPosition() + direction * m_speed * (float)deltaTime);
-        boundingRectangle.setPosition(sprite.getPosition());
+        //boundingRectangle.setPosition(sprite.getPosition());
         healthText.setPosition(sprite.getPosition());
     }
 }
